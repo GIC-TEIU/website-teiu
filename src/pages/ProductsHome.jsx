@@ -1,5 +1,11 @@
-import React from 'react'
-import ProductCard from '../components/ProductCard'
+import React from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+
+import ProductCard from '../components/ProductCard';
 import { produtosTeiu } from '../mocks/produtos';
 
 function ProductsSession() {
@@ -10,19 +16,35 @@ function ProductsSession() {
           <h2 className="text-2xl font-semibold text-black tracking-tight">
             Nossos Produtos
           </h2>
-          <button className="text-sm font-medium border rounded-full shadow-sm px-2 py-2 text-gray-500 hover:text-teiu-ocean">
+          <button className="text-sm font-medium border rounded-full shadow-sm px-2 py-2 text-gray-500 hover:text-teiu-blue-medium">
             Ver todos
           </button>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {produtosTeiu.map(item => (
-            <ProductCard key={item.id} {...item} />
-          ))}
+        {/* Container do Swiper com a classe 'group' para controlar o hover dos botões */}
+        <div className="relative group">
+          <Swiper
+            modules={[Navigation, Pagination]}
+            spaceBetween={30}
+            slidesPerView={1}
+            navigation={true}
+            pagination={{ clickable: true }}
+            breakpoints={{
+              640: { slidesPerView: 2 },
+              1024: { slidesPerView: 4 },
+            }}
+            className="pb-12" // Espaço para as bolinhas da paginação
+          >
+            {produtosTeiu.map((item) => (
+              <SwiperSlide key={item.id} className="h-full">
+                <ProductCard {...item} />
+              </SwiperSlide>
+            ))}
+          </Swiper>
         </div>
       </div>
     </section>
   );
 }
 
-export default ProductsSession
+export default ProductsSession;

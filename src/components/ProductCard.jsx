@@ -2,35 +2,36 @@ import React from 'react'
 
 function ProductCard({ title, author, description, imageUrl, price }) {
   return (
-    <div className="max-w-sm rounded-2xl overflow-hidden shadow-xl bg-white border border-gray-100 transition-transform hover:scale-105 duration-300">
-      <div className="px-6 py-4">
-        <div className="font-bold text-xl mb-1 text-teiu-primary-dark">{title}</div>
-      {/* Imagem do Produto */}
-      <div className="h-48 overflow-hidden">
-        {imageUrl ? (
-          <img className="w-32 h-full object-cover" src={imageUrl} alt={title} />
-        ) : (
-          <div className="w-full h-full bg-teiu-gray flex items-center justify-center text-gray-400">
-            Sem imagem
-          </div>
-        )}
-      </div>
-        <span className="text-sm font-medium text-teiu-secondary uppercase tracking-wider">
+    <div className="group max-w-sm rounded-3xl overflow-hidden bg-white border border-gray-100  
+                    flex flex-col h-full cursor-pointer">
+      
+      <div className="px-6 py-6 flex flex-col items-center text-center flex-grow">
+        
+        {/* Título */}
+        <div className="font-bold text-xl mb-4 text-teiu-primary-dark group-hover:text-teiu-ocean transition-colors duration-300">
+          {title}
+        </div>
+        <div className="h-56 w-full flex items-center justify-center overflow-hidden mb-4">
+          {imageUrl ? (
+            <img 
+              className=" h-58 w-38 object-contain transition-all duration-500 ease-in-out 
+                    hover:scale-[1.06] hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)]" 
+              src={imageUrl} 
+              alt={title} 
+            />
+          ) : (
+            <div className="w-full h-full bg-gray-50 flex items-center justify-center text-gray-400 rounded-xl">
+              Sem imagem
+            </div>
+          )}
+        </div>
+
+        <span className="text-xs font-bold text-teiu-secondary uppercase tracking-[0.2em] mb-3">
           {author}
         </span>
-        
-        <p className="text-gray-600 text-sm mt-3 line-clamp-3">
+        <p className="text-gray-500 text-sm leading-relaxed line-clamp-3">
           {description}
         </p>
-      </div>
-
-      <div className="px-6 pb-6 flex items-center justify-between">
-        <span className="text-2xl font-bold text-teiu-primary-dark">
-          {price}
-        </span>
-        <button className="bg-teiu-ocean text-white px-4 py-2 rounded-lg font-medium hover:bg-teiu-deep transition-colors">
-          Ver detalhes
-        </button>
       </div>
     </div>
   )

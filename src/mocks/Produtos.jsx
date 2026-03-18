@@ -18,5 +18,15 @@ export const produtosTeiu = [
     id: 4,
     title: "Vatz Original",
     imageUrl: "/assets/img/vatz1.png"
+  },
+  {
+    id: 5,
+    title: "Vatz Original",
+    imageUrl: "/assets/img/vatz1.png"
+  },
+   {
+    id: 6,
+    title: "Vatz Original",
+    imageUrl: "/assets/img/vatz1.png"
   }
 ];

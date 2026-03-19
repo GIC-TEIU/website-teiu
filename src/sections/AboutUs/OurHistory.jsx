@@ -55,8 +55,7 @@ function OurHistory() {
       </h2>
 
       <div className="relative max-w-5xl mx-auto">
-        
-        {/* Linha central (desktop apenas) */}
+     
         <div className="hidden sm:block absolute left-1/2 top-0 h-full w-[2px] transform -translate-x-1/2 bg-gray-300 overflow-hidden">
           <div
             className={`w-full bg-[#989797] transition-all duration-1000 ${
@@ -80,7 +79,7 @@ function OurHistory() {
                   : "sm:justify-end sm:flex-row-reverse"
               }`}
             >
-              {/* Imagem */}
+            
               <div
                 className={`w-full sm:w-[40%] ${
                   isLeft ? "sm:mr-auto" : "sm:ml-auto"
@@ -99,7 +98,7 @@ function OurHistory() {
                 />
               </div>
 
-              {/* Texto */}
+        
               <div
                 className={`w-full sm:w-[45%] px-4 sm:px-6 mt-4 sm:mt-0 transform transition-all duration-700 ${
                   isVisible
@@ -115,7 +114,6 @@ function OurHistory() {
                 </p>
               </div>
 
-              {/* Bolinha (desktop apenas) */}
               <div className="hidden sm:block absolute left-1/2 top-0 transform -translate-x-1/2 w-4 h-4 bg-[#989797] rounded-full border-2 border-white"></div>
             </div>
           );

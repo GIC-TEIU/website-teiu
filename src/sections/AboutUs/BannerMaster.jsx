@@ -1,4 +1,4 @@
-{/*Banne Genérico caso seja necessário a criação de uma página padrão */}
+{/*Banner Genérico caso seja necessário a criação de uma página padrão */}
 function BannerMaster({title, text}) {
     return (
         <>

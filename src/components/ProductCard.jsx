@@ -2,20 +2,20 @@ import React from 'react'
 
 function ProductCard({ title, author, description, imageUrl, price }) {
   return (
-    <div className="group max-w-sm rounded-3xl overflow-hidden bg-white border border-gray-100  
+    <div className="group max-w-sm rounded-2xl overflow-hidden bg-white border border-none shadow-md
                     flex flex-col h-full cursor-pointer">
       
       <div className="px-6 py-6 flex flex-col items-center text-center flex-grow">
         
         {/* Título */}
-        <div className="font-bold text-xl mb-4 text-teiu-primary-dark group-hover:text-teiu-ocean transition-colors duration-300">
+        <div className="font-teiu font-bold text-xl mb-4 text-teiu-primary-dark group-hover:text-teiu-ocean transition-colors duration-300">
           {title}
         </div>
         <div className="h-56 w-full flex items-center justify-center overflow-hidden mb-4">
           {imageUrl ? (
             <img 
               className=" h-58 w-38 object-contain transition-all duration-500 ease-in-out 
-                    hover:scale-[1.06] hover:shadow-[0_20px_50px_rgba(0,0,0,0.1)]" 
+                    hover:scale-[1.06] hover:hover:drop-shadow-[0_15px_15px_rgba(0,0,0,0.15)]" 
               src={imageUrl} 
               alt={title} 
             />

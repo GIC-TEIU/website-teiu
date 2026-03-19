@@ -1,8 +1,8 @@
 import Navbar from "../components/navbar";
-import BannerMaster from "../sections/BannerMaster";
-import FounderSection from "../sections/FounderSection.jsx";
-import OurFacilities from "../sections/OurFacilities";
-import OurHistory from "../sections/OurHistory";
+import BannerMaster from "../sections/AboutUs/BannerMaster";
+import FounderSection from "../sections/AboutUs/FounderSection.jsx";
+import OurFacilities from "../sections/AboutUs/OurFacilities";
+import OurHistory from "../sections/AboutUs/OurHistory";
 
 function AboutUs() {
     return ( 

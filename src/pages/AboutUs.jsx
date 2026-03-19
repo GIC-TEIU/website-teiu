@@ -16,7 +16,7 @@ function AboutUs() {
         <OurFacilities/>
         <OurHistory/>
         <FounderSection/>
-        <div className="bg-gradient-to-br from-[#02D1FF] to-[#074B9A]">
+        <div className="bg-gradient-to-br from-[#02D1FF] to-[#074B9A] pt-20">
            <SocialProof/>
         </div>
     </>

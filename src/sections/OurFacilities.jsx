@@ -1,0 +1,92 @@
+import { useState } from "react";
+
+function OurFacilities() {
+  const [open, setOpen] = useState(false);
+
+  return (
+    <section className="w-full py-24 px-4 sm:px-8 lg:px-[150px] bg-white">
+      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row justify-around items-center gap-10">
+        
+        {/* Texto */}
+        <div className="w-full max-w-[400px]">
+          <h2 className="text-2xl sm:text-3xl font-bold text-black mb-4 leading-tight">
+            Lorem ipsum dolor sit amet, consectetur
+          </h2>
+
+          <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.
+          </p>
+        </div>
+
+        {/* Vídeo */}
+        <div
+          className="w-full lg:w-1/2 relative group cursor-pointer"
+          onClick={() => setOpen(true)}
+        >
+          {/* Imagem */}
+          <div className="rounded-lg overflow-hidden shadow-lg">
+            <img
+              src="/assets/img/facilities.jpg"
+              alt="Facilities"
+              className="w-full h-full object-cover transition duration-500 group-hover:scale-105"
+            />
+          </div>
+
+          {/* Overlay */}
+          <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition rounded-lg" />
+
+          {/* Botão play */}
+          <div className="absolute inset-0 flex items-center justify-center">
+            <button
+              onClick={(e) => {
+                e.stopPropagation(); // impede duplicar o clique
+                setOpen(true);
+              }}
+              className={`bg-red-600 hover:bg-red-700 transition rounded-full p-5 shadow-lg hover:scale-110 duration-300 ${
+                open ? "" : "animate-pulse"
+              }`}
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                className="w-10 h-10 text-white"
+                fill="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path d="M8 5v14l11-7z" />
+              </svg>
+            </button>
+          </div>
+
+          
+        </div>
+      </div>
+
+      {/* Modal */}
+      {open && (
+        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50">
+
+          <div className="w-[90%] max-w-3xl aspect-video bg-black rounded-lg shadow-2xl overflow-hidden animate-[fadeIn_0.3s_ease-in-out]">
+            <iframe
+              className="w-full h-full"
+              src="https://www.youtube.com/embed/fqBCd5sztdU?autoplay=1"
+              title="YouTube video"
+              frameBorder="0"
+              allow="autoplay; encrypted-media"
+              allowFullScreen
+            />
+          </div>
+
+          {/* Fechar */}
+          <button
+            onClick={() => setOpen(false)}
+            className="absolute top-5 right-5 text-white text-3xl hover:scale-110 transition"
+          >
+            ✕
+          </button>
+        </div>
+      )}
+    </section>
+  );
+}
+
+export default OurFacilities;

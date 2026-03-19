@@ -1,12 +1,18 @@
 const ProductCard = ({ title, imageUrl }) => {
     return (
-        <div className="relative bg-[#E7EBEF] rounded-[35px] pt-8 pb-12 px-6 flex flex-col items-center justify-between shadow-[0_8px_30px_rgb(0,0,0,0.12)] max-w-[310px] w-full mx-auto mt-6 mb-8">
+        <div className="group relative bg-[#E7EBEF] rounded-[35px] pt-8 pb-12 px-6 flex flex-col items-center justify-between 
+                        shadow-[0_20px_50px_rgba(0,0,0,0.2)] hover:shadow-[0_30px_60px_rgba(0,0,0,0.25)] 
+                        max-w-[310px] w-full mx-auto mt-6 mb-8 transition-all duration-300 ease-in-out">
 
-            <div className="w-full flex justify-center mb-5 h-[220px]">
+            <div className="w-full flex justify-center mb-5 h-[220px] overflow-visible">
                 <img
                     src={imageUrl}
                     alt={title}
-                    className="h-full w-auto object-contain drop-shadow-xl"
+                    className="h-full w-auto object-contain 
+                               transition-transform duration-500 ease-in-out 
+                               group-hover:scale-110
+                               /* Sombra ajustada: deslocamento para a direita e para baixo */
+                               filter drop-shadow-[8px_15px_15px_rgba(0,0,0,0.4)]"
                 />
             </div>
 

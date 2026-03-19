@@ -3,15 +3,18 @@ import ProductsHome from "../sections/ProductsHome"
 import Hero from "../sections/Hero"
 import Footer from "../components/Footer"
 import InstitutionalVideo from "../sections/VideoPage"
+import InstagramSection from "../sections/InstagramSection"
+
 function Home() {
     return ( 
         <>
         <Navbar />
-        <main>
+        <main className="w-full">
           <Hero />
           <ProductsHome />
           <InstitutionalVideo />
-          <div className="bg-linear-to-r from-cyan-500 to-blue-500">
+          <div className="relative w-full bg-unificado-teiu overflow-hidden">
+          <InstagramSection />
           <Footer/>
           </div>
         </main>

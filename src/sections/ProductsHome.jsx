@@ -6,7 +6,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
 import ProductCard from '../components/ProductCard';
-import { produtosTeiu } from '../mocks/produtos';
+import { produtosTeiu } from '../mocks/Products';
 
 function ProductsSession() {
   return (

@@ -7,7 +7,7 @@ function OurFacilities() {
     <section className="w-full py-24 px-4 sm:px-8 lg:px-[150px] bg-white">
       <div className="max-w-7xl mx-auto flex flex-col lg:flex-row justify-around items-center gap-10">
         
-        {/* Texto */}
+
         <div className="w-full max-w-[400px]">
           <h2 className="text-2xl sm:text-3xl font-bold text-black mb-4 leading-tight">
             Lorem ipsum dolor sit amet, consectetur
@@ -18,12 +18,11 @@ function OurFacilities() {
           </p>
         </div>
 
-        {/* Vídeo */}
         <div
           className="w-full lg:w-1/2 relative group cursor-pointer"
           onClick={() => setOpen(true)}
         >
-          {/* Imagem */}
+
           <div className="rounded-lg overflow-hidden shadow-lg">
             <img
               src="/assets/img/facilities.jpg"
@@ -32,14 +31,14 @@ function OurFacilities() {
             />
           </div>
 
-          {/* Overlay */}
+      
           <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition rounded-lg" />
 
-          {/* Botão play */}
+          
           <div className="absolute inset-0 flex items-center justify-center">
             <button
               onClick={(e) => {
-                e.stopPropagation(); // impede duplicar o clique
+                e.stopPropagation(); 
                 setOpen(true);
               }}
               className={`bg-red-600 hover:bg-red-700 transition rounded-full p-5 shadow-lg hover:scale-110 duration-300 ${
@@ -61,7 +60,7 @@ function OurFacilities() {
         </div>
       </div>
 
-      {/* Modal */}
+
       {open && (
         <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50">
 

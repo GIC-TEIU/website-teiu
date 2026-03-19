@@ -3,6 +3,7 @@ import BannerMaster from "../sections/AboutUs/BannerMaster";
 import FounderSection from "../sections/AboutUs/FounderSection.jsx";
 import OurFacilities from "../sections/AboutUs/OurFacilities";
 import OurHistory from "../sections/AboutUs/OurHistory";
+import SocialProof from "../sections/AboutUs/SocialProof.jsx";
 
 function AboutUs() {
     return ( 
@@ -16,7 +17,7 @@ function AboutUs() {
         <OurHistory/>
         <FounderSection/>
         <div className="bg-gradient-to-br from-[#02D1FF] to-[#074B9A]">
-
+           <SocialProof/>
         </div>
     </>
     );

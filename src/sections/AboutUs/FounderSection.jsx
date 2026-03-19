@@ -4,7 +4,7 @@ function FounderSection() {
         
         <div className="relative max-w-[50%] ">
   
-          {/* Imagem de fundo */}
+         
           <img
             src="/assets/img/founder.jpg"
             alt="Fundador"

@@ -56,3 +56,7 @@
   pointer-events: none;
   z-index: 0;
 }
+
+#root {
+  overflow-x: hidden;
+}

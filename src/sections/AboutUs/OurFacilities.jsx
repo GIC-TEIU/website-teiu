@@ -1,28 +1,60 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 
 function OurFacilities() {
   const [open, setOpen] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const sectionRef = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <section className="w-full py-24 px-4 sm:px-8 lg:px-[150px] bg-white">
+    <section
+      ref={sectionRef}
+      className="w-full py-24 px-4 sm:px-8 lg:px-[150px] bg-white overflow-hidden"
+    >
       <div className="max-w-7xl mx-auto flex flex-col lg:flex-row justify-around items-center gap-10">
         
-
-        <div className="w-full max-w-[400px]">
+        {/* Texto */}
+        <div
+          className={`w-full max-w-[400px] transition-all duration-1000 ${
+            visible
+              ? "opacity-100 translate-x-0"
+              : "opacity-0 -translate-x-20"
+          }`}
+        >
           <h2 className="text-2xl sm:text-3xl font-bold text-black mb-4 leading-tight">
             Lorem ipsum dolor sit amet, consectetur
           </h2>
 
           <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
           </p>
         </div>
 
+        {/* Vídeo */}
         <div
-          className="w-full lg:w-1/2 relative group cursor-pointer"
           onClick={() => setOpen(true)}
+          className={`w-full lg:w-1/2 relative group cursor-pointer transition-all duration-1000 delay-200 ${
+            visible
+              ? "opacity-100 translate-x-0"
+              : "opacity-0 translate-x-20"
+          }`}
         >
-
           <div className="rounded-lg overflow-hidden shadow-lg">
             <img
               src="/assets/img/facilities.jpg"
@@ -31,14 +63,12 @@ function OurFacilities() {
             />
           </div>
 
-      
           <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition rounded-lg" />
 
-          
           <div className="absolute inset-0 flex items-center justify-center">
             <button
               onClick={(e) => {
-                e.stopPropagation(); 
+                e.stopPropagation();
                 setOpen(true);
               }}
               className={`bg-red-600 hover:bg-red-700 transition rounded-full p-5 shadow-lg hover:scale-110 duration-300 ${
@@ -55,16 +85,19 @@ function OurFacilities() {
               </svg>
             </button>
           </div>
-
-          
         </div>
       </div>
 
-
+      {/* Modal */}
       {open && (
-        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50">
-
-          <div className="w-[90%] max-w-3xl aspect-video bg-black rounded-lg shadow-2xl overflow-hidden animate-[fadeIn_0.3s_ease-in-out]">
+        <div
+          onClick={() => setOpen(false)}
+          className="fixed inset-0 bg-black/80 flex items-center justify-center z-50"
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="w-[90%] max-w-3xl aspect-video bg-black rounded-lg shadow-2xl overflow-hidden animate-[fadeIn_0.3s_ease-in-out]"
+          >
             <iframe
               className="w-full h-full"
               src="https://www.youtube.com/embed/fqBCd5sztdU?autoplay=1"
@@ -75,7 +108,6 @@ function OurFacilities() {
             />
           </div>
 
-          {/* Fechar */}
           <button
             onClick={() => setOpen(false)}
             className="absolute top-5 right-5 text-white text-3xl hover:scale-110 transition"

@@ -30,8 +30,8 @@ function InstitutionalVideo({ videoUrl, posterUrl }) {
   }, []);
 
   return (
-    <section className="w-full bg-white py-16 flex justify-center">
-      <div className="w-full max-w-6xl px-4">
+    <section className="w-full bg-white py-10 flex justify-center">
+      <div className="w-full max-w-7xl px-4">
         <div className="relative aspect-video rounded-[40px] overflow-hidden shadow-xl bg-gray-100">
             <video
             ref={videoRef}

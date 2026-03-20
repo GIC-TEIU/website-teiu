@@ -3,11 +3,14 @@ import { useState, useEffect, useRef } from "react";
 function OurHistory() {
   const [showAll, setShowAll] = useState(false);
   const [visibleIndexes, setVisibleIndexes] = useState([]);
+  const [leavingIndexes, setLeavingIndexes] = useState([]);
   const [lineHeight, setLineHeight] = useState(0);
   const [activeDots, setActiveDots] = useState([]);
+  const [isToggling, setIsToggling] = useState(false);
 
   const itemRefs = useRef([]);
   const containerRef = useRef(null);
+  const ticking = useRef(false);
 
   const timeline = [
     {
@@ -29,13 +32,17 @@ function OurHistory() {
 
   const visibleItems = showAll ? timeline : timeline.slice(0, 2);
 
-  // animação dos cards
+  useEffect(() => {
+    itemRefs.current = [];
+  }, [showAll]);
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
+          const index = Number(entry.target.dataset.index);
+
           if (entry.isIntersecting) {
-            const index = Number(entry.target.dataset.index);
             setVisibleIndexes((prev) =>
               prev.includes(index) ? prev : [...prev, index]
             );
@@ -45,53 +52,86 @@ function OurHistory() {
       { threshold: 0.2 }
     );
 
-    itemRefs.current.forEach((el) => {
-      if (el) observer.observe(el);
-    });
+    itemRefs.current.forEach((el) => el && observer.observe(el));
 
     return () => observer.disconnect();
   }, [visibleItems]);
 
-  // 🔥 linha + bolinhas sincronizadas
+
   useEffect(() => {
     const handleScroll = () => {
-      const container = containerRef.current;
-      if (!container) return;
-
-      const rect = container.getBoundingClientRect();
-      const windowHeight = window.innerHeight;
-
-      const triggerPoint = windowHeight * 0.75;
-      const visible = triggerPoint - rect.top;
-      const total = rect.height;
-
-      const progress = Math.min(Math.max(visible / (total * 1.2), 0), 1);
-
-      setLineHeight(progress * 100);
-
-      // ativa bolinhas
-      const newActiveDots = [];
-
-      itemRefs.current.forEach((el, index) => {
-        if (!el) return;
-
-        const itemRect = el.getBoundingClientRect();
-
-        if (itemRect.top < triggerPoint) {
-          newActiveDots.push(index);
+      if (ticking.current) return;
+    
+      ticking.current = true;
+    
+      requestAnimationFrame(() => {
+        const container = containerRef.current;
+        if (!container) {
+          ticking.current = false;
+          return;
         }
-      });
+    
+        const scrollTop = window.scrollY;
+        const windowHeight = window.innerHeight;
+    
+        const offsetTop = container.offsetTop;
+        const height = container.offsetHeight;
+    
+        const triggerPoint = windowHeight * 0.75;
+    
+        const progress = Math.min(
+          Math.max((scrollTop + triggerPoint - offsetTop) / (height * 1.2), 0),
+          1
+        );
+    
+        const calculatedLineHeight = progress * 100;
+    
 
-      setActiveDots(newActiveDots);
+        setLineHeight(calculatedLineHeight);
+    
+        const newActiveDots = [];
+        const newLeaving = [];
+    
+        itemRefs.current.forEach((el, index) => {
+          if (!el) return;
+    
+          const itemTop = el.offsetTop;
+    
+          if (scrollTop + triggerPoint > itemTop) {
+            newActiveDots.push(index);
+          }
+    
+          if (scrollTop + windowHeight < itemTop) {
+            newLeaving.push(index);
+          }
+        });
+    
+        setActiveDots(newActiveDots);
+        setLeavingIndexes(newLeaving);
+    
+        ticking.current = false;
+      });
     };
 
-    const onScroll = () => requestAnimationFrame(handleScroll);
+    window.addEventListener("scroll", handleScroll);
 
-    window.addEventListener("scroll", onScroll);
-    handleScroll();
 
-    return () => window.removeEventListener("scroll", onScroll);
+    const timeout = handleScroll();
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      clearTimeout(timeout);
+    };
   }, [showAll]);
+
+  const handleToggle = () => {
+    setIsToggling(true);
+    setShowAll((prev) => !prev);
+
+    setTimeout(() => {
+      setIsToggling(false);
+    }, 400);
+  };
 
   return (
     <div className="w-full bg-[#F5F5F5] py-10 px-4 sm:px-8 lg:px-[150px]">
@@ -100,13 +140,12 @@ function OurHistory() {
       </h2>
 
       <div ref={containerRef} className="relative max-w-5xl mx-auto">
-        
-        {/* Linha base */}
+        {/* LINHA */}
         <div className="hidden sm:block absolute left-1/2 top-0 h-full w-[2px] transform -translate-x-1/2 bg-gray-300">
-          
-          {/* 🔥 Linha escura animada */}
           <div
-            className="w-full bg-[#383838] transition-all duration-300 ease-out"
+            className={`w-full bg-[#383838] ${
+              isToggling ? "" : "transition-all duration-300 ease-out"
+            }`}
             style={{ height: `${lineHeight}%` }}
           />
         </div>
@@ -114,11 +153,12 @@ function OurHistory() {
         {visibleItems.map((item, index) => {
           const isLeft = index % 2 === 0;
           const isVisible = visibleIndexes.includes(index);
+          const isLeaving = leavingIndexes.includes(index);
           const isActive = activeDots.includes(index);
 
           return (
             <div
-              key={index}
+              key={item.year} // 🔥 chave estável
               ref={(el) => (itemRefs.current[index] = el)}
               data-index={index}
               className={`relative w-full flex flex-col sm:flex-row items-start pt-6 mb-16 ${
@@ -127,12 +167,17 @@ function OurHistory() {
                   : "sm:justify-end sm:flex-row-reverse"
               }`}
             >
+              {/* IMAGEM */}
               <div
                 className={`w-full sm:w-[40%] ${
                   isLeft ? "sm:mr-auto" : "sm:ml-auto"
                 } transform transition-all duration-700 ${
-                  isVisible
+                  isVisible && !isLeaving
                     ? "opacity-100 translate-x-0"
+                    : isLeaving
+                    ? isLeft
+                      ? "opacity-0 -translate-x-10"
+                      : "opacity-0 translate-x-10"
                     : isLeft
                     ? "opacity-0 -translate-x-10"
                     : "opacity-0 translate-x-10"
@@ -145,9 +190,10 @@ function OurHistory() {
                 />
               </div>
 
+              {/* TEXTO */}
               <div
                 className={`w-full sm:w-[45%] px-4 sm:px-6 mt-4 sm:mt-0 transform transition-all duration-700 ${
-                  isVisible
+                  isVisible && !isLeaving
                     ? "opacity-100 translate-y-0"
                     : "opacity-0 translate-y-6"
                 }`}
@@ -160,7 +206,7 @@ function OurHistory() {
                 </p>
               </div>
 
-              {/* 🔥 Bolinha */}
+              {/* BOLINHA */}
               <div
                 className={`hidden sm:block absolute left-1/2 top-0 transform -translate-x-1/2 w-4 h-4 rounded-full border-2 border-white transition-all duration-500 ${
                   isActive
@@ -173,11 +219,11 @@ function OurHistory() {
         })}
       </div>
 
-      {/* Botão */}
+      {/* BOTÃO */}
       {timeline.length > 2 && (
         <div className="flex justify-center mt-10">
           <button
-            onClick={() => setShowAll(!showAll)}
+            onClick={handleToggle}
             className="px-6 py-2 cursor-pointer rounded-lg border border-[#383838] text-[#383838] bg-transparent 
                        hover:bg-[#383838] hover:text-white transition-colors duration-300"
           >

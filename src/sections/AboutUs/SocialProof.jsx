@@ -3,8 +3,11 @@ import { useEffect, useRef, useState } from "react";
 
 function SocialProof() {
   const [visible, setVisible] = useState(false);
+  const [isLeaving, setIsLeaving] = useState(false);
+
   const ref = useRef(null);
 
+  // 🔥 ENTRADA
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -20,6 +23,41 @@ function SocialProof() {
     return () => observer.disconnect();
   }, []);
 
+  // 🔥 SAÍDA
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!ref.current) return;
+
+      const rect = ref.current.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+
+      const exitStart = windowHeight * 0.55;
+
+      if (rect.top > exitStart) {
+        setIsLeaving(true);
+      } else {
+        setIsLeaving(false);
+      }
+    };
+
+    const onScroll = () => requestAnimationFrame(handleScroll);
+
+    window.addEventListener("scroll", onScroll);
+    handleScroll();
+
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // 🔥 função pra evitar repetir lógica
+  const getAnimation = (delay = "") =>
+    `transition-all duration-700 ${delay} ${
+      visible && !isLeaving
+        ? "opacity-100 translate-y-0 scale-100"
+        : isLeaving
+        ? "opacity-0 translate-y-10 scale-95"
+        : "opacity-0 translate-y-10 scale-95"
+    }`;
+
   return (
     <section
       ref={ref}
@@ -29,11 +67,7 @@ function SocialProof() {
         
         {/* Card 1 */}
         <div
-          className={`flex-1 max-w-[380px] aspect-[5/4.6] bg-[rgba(255,255,255,0.31)] backdrop-blur-md rounded-2xl shadow-md border border-white/30 p-6 text-center relative flex flex-col justify-center items-center transition-all duration-700 ${
-            visible
-              ? "opacity-100 translate-y-0 scale-100"
-              : "opacity-0 translate-y-10 scale-95"
-          }`}
+          className={`flex-1 max-w-[380px] aspect-[5/4.6] bg-[rgba(255,255,255,0.31)] backdrop-blur-md rounded-2xl shadow-md border border-white/30 p-6 text-center relative flex flex-col justify-center items-center ${getAnimation()}`}
         >
           <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-white rounded-full p-3 shadow-md border border-white/30">
             <Lightbulb className="w-9 h-9 text-gray-700" />
@@ -50,11 +84,7 @@ function SocialProof() {
 
         {/* Card 2 */}
         <div
-          className={`flex-1 max-w-[380px] aspect-[5/4.6] bg-[rgba(255,255,255,0.31)] backdrop-blur-md rounded-2xl shadow-md border border-white/30 p-6 text-center relative flex flex-col justify-center items-center transition-all duration-700 delay-200 ${
-            visible
-              ? "opacity-100 translate-y-0 scale-100"
-              : "opacity-0 translate-y-10 scale-95"
-          }`}
+          className={`flex-1 max-w-[380px] aspect-[5/4.6] bg-[rgba(255,255,255,0.31)] backdrop-blur-md rounded-2xl shadow-md border border-white/30 p-6 text-center relative flex flex-col justify-center items-center ${getAnimation("delay-200")}`}
         >
           <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-white rounded-full p-3 shadow-md border border-white/30">
             <Rocket className="w-9 h-9 text-gray-700" />
@@ -72,11 +102,7 @@ function SocialProof() {
 
         {/* Card 3 */}
         <div
-          className={`flex-1 max-w-[380px] aspect-[5/4.6] bg-[rgba(255,255,255,0.31)] backdrop-blur-md rounded-2xl shadow-md border border-white/30 p-6 text-center relative flex flex-col justify-center items-center transition-all duration-700 delay-500 ${
-            visible
-              ? "opacity-100 translate-y-0 scale-100"
-              : "opacity-0 translate-y-10 scale-95"
-          }`}
+          className={`flex-1 max-w-[380px] aspect-[5/4.6] bg-[rgba(255,255,255,0.31)] backdrop-blur-md rounded-2xl shadow-md border border-white/30 p-6 text-center relative flex flex-col justify-center items-center ${getAnimation("delay-500")}`}
         >
           <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-white rounded-full p-3 shadow-md border border-white/30">
             <Box className="w-9 h-9 text-gray-700" />

@@ -3,29 +3,33 @@ import { useState, useEffect, useRef } from "react";
 function OurHistory() {
   const [showAll, setShowAll] = useState(false);
   const [visibleIndexes, setVisibleIndexes] = useState([]);
+  const [lineHeight, setLineHeight] = useState(0);
+  const [activeDots, setActiveDots] = useState([]);
+
   const itemRefs = useRef([]);
+  const containerRef = useRef(null);
 
   const timeline = [
     {
       year: "1995",
-      text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.",
+      text: "Lorem ipsum dolor sit amet...",
       image: "/assets/img/saboaria-conquista-1995.png",
     },
     {
       year: "1998",
-      text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.",
+      text: "Lorem ipsum dolor sit amet...",
       image: "/assets/img/saboaria-1995.png",
     },
     {
       year: "2000",
-      text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.",
-
+      text: "Lorem ipsum dolor sit amet...",
       image: "/assets/img/saboaria-conquista-1995.png",
     },
   ];
 
   const visibleItems = showAll ? timeline : timeline.slice(0, 2);
 
+  // animação dos cards
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -48,25 +52,69 @@ function OurHistory() {
     return () => observer.disconnect();
   }, [visibleItems]);
 
+  // 🔥 linha + bolinhas sincronizadas
+  useEffect(() => {
+    const handleScroll = () => {
+      const container = containerRef.current;
+      if (!container) return;
+
+      const rect = container.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+
+      const triggerPoint = windowHeight * 0.75;
+      const visible = triggerPoint - rect.top;
+      const total = rect.height;
+
+      const progress = Math.min(Math.max(visible / (total * 1.2), 0), 1);
+
+      setLineHeight(progress * 100);
+
+      // ativa bolinhas
+      const newActiveDots = [];
+
+      itemRefs.current.forEach((el, index) => {
+        if (!el) return;
+
+        const itemRect = el.getBoundingClientRect();
+
+        if (itemRect.top < triggerPoint) {
+          newActiveDots.push(index);
+        }
+      });
+
+      setActiveDots(newActiveDots);
+    };
+
+    const onScroll = () => requestAnimationFrame(handleScroll);
+
+    window.addEventListener("scroll", onScroll);
+    handleScroll();
+
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [showAll]);
+
   return (
     <div className="w-full bg-[#F5F5F5] py-10 px-4 sm:px-8 lg:px-[150px]">
       <h2 className="text-2xl font-bold mb-10 sm:mb-12 ml-0 sm:ml-10">
         Nossa História
       </h2>
 
-      <div className="relative max-w-5xl mx-auto">
-     
-        <div className="hidden sm:block absolute left-1/2 top-0 h-full w-[2px] transform -translate-x-1/2 bg-gray-300 overflow-hidden">
+      <div ref={containerRef} className="relative max-w-5xl mx-auto">
+        
+        {/* Linha base */}
+        <div className="hidden sm:block absolute left-1/2 top-0 h-full w-[2px] transform -translate-x-1/2 bg-gray-300">
+          
+          {/* 🔥 Linha escura animada */}
           <div
-            className={`w-full bg-[#989797] transition-all duration-1000 ${
-              showAll ? "h-full" : "h-[35%]"
-            }`}
-          ></div>
+            className="w-full bg-[#383838] transition-all duration-300 ease-out"
+            style={{ height: `${lineHeight}%` }}
+          />
         </div>
 
         {visibleItems.map((item, index) => {
           const isLeft = index % 2 === 0;
           const isVisible = visibleIndexes.includes(index);
+          const isActive = activeDots.includes(index);
 
           return (
             <div
@@ -79,7 +127,6 @@ function OurHistory() {
                   : "sm:justify-end sm:flex-row-reverse"
               }`}
             >
-            
               <div
                 className={`w-full sm:w-[40%] ${
                   isLeft ? "sm:mr-auto" : "sm:ml-auto"
@@ -98,7 +145,6 @@ function OurHistory() {
                 />
               </div>
 
-        
               <div
                 className={`w-full sm:w-[45%] px-4 sm:px-6 mt-4 sm:mt-0 transform transition-all duration-700 ${
                   isVisible
@@ -114,7 +160,14 @@ function OurHistory() {
                 </p>
               </div>
 
-              <div className="hidden sm:block absolute left-1/2 top-0 transform -translate-x-1/2 w-4 h-4 bg-[#989797] rounded-full border-2 border-white"></div>
+              {/* 🔥 Bolinha */}
+              <div
+                className={`hidden sm:block absolute left-1/2 top-0 transform -translate-x-1/2 w-4 h-4 rounded-full border-2 border-white transition-all duration-500 ${
+                  isActive
+                    ? "bg-[#383838] scale-110"
+                    : "bg-gray-300 scale-90"
+                }`}
+              />
             </div>
           );
         })}

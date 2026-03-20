@@ -1,58 +1,65 @@
 import { useEffect, useRef, useState } from "react";
 
 function FounderSection() {
-  const [visible, setVisible] = useState(false);
+  const [progress, setProgress] = useState(0);
   const ref = useRef(null);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setVisible(true);
-        }
-      },
-      { threshold: 0.3 }
-    );
+    const handleScroll = () => {
+      if (!ref.current) return;
 
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
+      const rect = ref.current.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
 
-    return () => observer.disconnect();
+      // Quando começa a sair (quando encosta no final da tela)
+      const start = windowHeight * 0.15;
+      const end = windowHeight;
+
+      // Progresso de saída (0 → 1)
+      let value = (rect.top - start) / (end - start);
+
+      value = Math.max(0, Math.min(1, value));
+
+      setProgress(value);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    handleScroll();
+
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Inverte pra usar como visibilidade
+  const opacity = 1 - progress;
+  const translateY = progress * 80; // move pra baixo enquanto some
 
   return (
     <section
       ref={ref}
-      className={`w-full py-20 px-4 sm:px-8 lg:px-[150px] flex justify-center transition-all duration-1000 ${
-        visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-      }`}
+      style={{
+        opacity,
+        transform: `translateY(${translateY}px)`,
+      }}
+      className="w-full py-16 sm:py-20 px-4 sm:px-6 md:px-10 lg:px-20 flex justify-center transition-all duration-200"
     >
-      <div className="relative max-w-[70%] flex flex-col items-center">
+      <div className="w-full max-w-5xl flex flex-col items-center gap-6">
         
-        {/* IMAGEM (zoom + fade) */}
-        <div
-          className={`overflow-hidden transition-all duration-1000 ${
-            visible ? "opacity-100 scale-100" : "opacity-0 scale-95"
-          }`}
-        >
+        {/* IMAGEM */}
+        <div className="w-full overflow-hidden transition-all duration-500">
           <img
             src="/assets/img/founder.jpg"
             alt="Fundador"
-            className="w-full h-full object-cover rounded-lg shadow-lg"
+            className="w-full h-[250px] sm:h-[350px] md:h-[450px] object-contain rounded-xl shadow-lg"
           />
         </div>
 
-        <div
-          className={`flex flex-col items-center text-center transition-all duration-1000 delay-300 ${
-            visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-          }`}
-        >
-          <h4 className="font-bold mt-[20px] mb-[5px] text-xl">
+        {/* TEXTO */}
+        <div className="flex flex-col items-center text-center">
+          <h4 className="font-bold text-lg sm:text-xl md:text-2xl mb-2">
             Risus commodo viverra maecenas accumsan lacus vel.
           </h4>
 
-          <p className="text-xl text-gray-600">
+          <p className="text-sm sm:text-base md:text-lg text-gray-600 max-w-2xl">
             Quis ipsum suspendisse ultrices gravida. Risus commodo viverra
             maecenas accumsan lacus vel.
           </p>

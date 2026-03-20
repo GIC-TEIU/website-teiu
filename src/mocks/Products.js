@@ -5,7 +5,8 @@ export const produtosTeiu = [
      category: "Limpeza Pesada",
      brand: "Teiú",
      fragrance: "Original",
-     volume: "1L" },
+     volume: "1L",
+     featured: false},
   
   { id: 3,
      title: "Desinfetante Lavanda",
@@ -13,7 +14,8 @@ export const produtosTeiu = [
      category: "Desinfetantes",
      brand: "Teiú",
      fragrance: "Lavanda",
-     volume: "1L" },
+     volume: "1L",
+     featured: false },
   
   { id: 4,
      title: "Vatz Original",
@@ -21,7 +23,8 @@ export const produtosTeiu = [
      category: "Multiuso",
      brand: "Vatz",
      fragrance: "Original",
-     volume: "500ml" },
+     volume: "500ml",
+     featured: true },
   
   { id: 5,
      title: "Gel Lavanda",
@@ -29,7 +32,8 @@ export const produtosTeiu = [
      category: "Limpeza Específica",
      brand: "Teiú",
      fragrance: "Lavanda",
-     volume: "500ml" },
+     volume: "500ml",
+     featured: false },
   
   { id: 6,
      title: "Sabonete Líquido",
@@ -37,7 +41,8 @@ export const produtosTeiu = [
      category: "Higiene",
      brand: "Teiú",
      fragrance: "Marine",
-     volume: "500ml" },
+     volume: "500ml",
+     featured: false },
   
   { id: 7,
      title: "Amaciante Amor 1L",
@@ -45,7 +50,8 @@ export const produtosTeiu = [
      category: "Roupas",
      brand: "Teiú",
      fragrance: "Amor",
-     volume: "1L" },
+     volume: "1L",
+     featured: true },
   
   { id: 8,
      title: "Amaciante Amor 2L",
@@ -53,7 +59,8 @@ export const produtosTeiu = [
      category: "Roupas",
      brand: "Teiú",
      fragrance: "Amor",
-     volume: "2L" },
+     volume: "2L",
+     featured: false },
   
   { id: 9,
      title: "Amaciante Amor 3L",
@@ -61,7 +68,8 @@ export const produtosTeiu = [
      category: "Roupas",
      brand: "Teiú",
      fragrance: "Amor",
-     volume: "3L" },
+     volume: "3L",
+     featured: false },
   
   { id: 10,
      title: "Lava Louças Maçã 500ML",
@@ -69,7 +77,8 @@ export const produtosTeiu = [
      category: "Cozinha",
      brand: "Teiú",
      fragrance: "Maçã",
-     volume: "500ml" },
+     volume: "500ml",
+     featured: false },
   
   { id: 11,
      title: "Lava Louças Maçã 2L",
@@ -77,7 +86,8 @@ export const produtosTeiu = [
      category: "Cozinha",
      brand: "Teiú",
      fragrance: "Maçã",
-     volume: "2L" },
+     volume: "2L",
+     featured: false },
   
   { id: 12,
      title: "Lava Roupas Líquido Perfumes 1L",
@@ -85,7 +95,8 @@ export const produtosTeiu = [
      category: "Roupas",
      brand: "Teiú",
      fragrance: "Perfumes",
-     volume: "1L" },
+     volume: "1L",
+     featured: true},
   
   { id: 13,
      title: "Lava Roupas Líquido Perfumes 3L",
@@ -93,7 +104,8 @@ export const produtosTeiu = [
      category: "Roupas",
      brand: "Teiú",
      fragrance: "Perfumes",
-     volume: "3L" },
+     volume: "3L",
+     featured: false },
   
   { id: 14,
      title: "Lava Roupas Líquido Perfumes 5L",
@@ -101,7 +113,8 @@ export const produtosTeiu = [
      category: "Roupas",
      brand: "Teiú",
      fragrance: "Perfumes",
-     volume: "5L" },
+     volume: "5L",
+     featured: false},
   
   { id: 15,
      title: "Limpador Perfumado Felicitá 500ML",
@@ -109,7 +122,8 @@ export const produtosTeiu = [
      category: "Limpeza Perfumada",
      brand: "Teiú",
      fragrance: "Felicitá",
-     volume: "500ml" },
+     volume: "500ml",
+     featured: true},
   
   { id: 16,
      title: "Limpador Perfumado Felicitá 1L",
@@ -117,7 +131,8 @@ export const produtosTeiu = [
      category: "Limpeza Perfumada",
      brand: "Teiú",
      fragrance: "Felicitá",
-     volume: "1L" },
+     volume: "1L",
+     featured: false },
   
   { id: 17,
      title: "Limpador Intimitá 500ML",
@@ -125,7 +140,8 @@ export const produtosTeiu = [
      category: "Limpeza Perfumada",
      brand: "Teiú",
      fragrance: "Intimitá",
-     volume: "500ml" },
+     volume: "500ml",
+     featured: true },
   
   { id: 18,
      title: "Limpador Intimitá 1L",
@@ -133,5 +149,6 @@ export const produtosTeiu = [
      category: "Limpeza Perfumada",
      brand: "Teiú",
      fragrance: "Intimitá",
-     volume: "1L" }
+     volume: "1L",
+     featured: false }
 ];

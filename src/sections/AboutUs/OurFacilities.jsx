@@ -29,7 +29,6 @@ function OurFacilities() {
     >
       <div className="max-w-7xl mx-auto flex flex-col lg:flex-row justify-around items-center gap-10">
         
-        {/* Texto */}
         <div
           className={`w-full max-w-[400px] transition-all duration-1000 ${
             visible
@@ -46,7 +45,6 @@ function OurFacilities() {
           </p>
         </div>
 
-        {/* Vídeo */}
         <div
           onClick={() => setOpen(true)}
           className={`w-full lg:w-1/2 relative group cursor-pointer transition-all duration-1000 delay-200 ${
@@ -87,8 +85,6 @@ function OurFacilities() {
           </div>
         </div>
       </div>
-
-      {/* Modal */}
       {open && (
         <div
           onClick={() => setOpen(false)}

@@ -30,9 +30,9 @@ function InstitutionalVideo({ videoUrl, posterUrl }) {
   }, []);
 
   return (
-    <section className="w-full bg-white py-10 flex justify-center">
-      <div className="w-full max-w-7xl px-4">
-        <div className="relative aspect-video rounded-[40px] overflow-hidden shadow-xl bg-gray-100">
+    <section className="w-full flex justify-center">
+      <div className="w-full">
+        <div className="relative aspect-video ">
             <video
             ref={videoRef}
             src="/assets/video/Eternità.mp4" 
@@ -43,7 +43,6 @@ function InstitutionalVideo({ videoUrl, posterUrl }) {
             disablePictureInPicture
             className="w-full h-full object-cover"
             />
-        
           <div className="absolute inset-0 bg-black/5 pointer-events-none" />
         </div>
       </div>

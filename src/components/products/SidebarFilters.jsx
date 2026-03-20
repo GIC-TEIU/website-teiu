@@ -19,19 +19,19 @@ const SidebarFilters = ({ filters, setFilters, options, isOpen, onClose }) => {
 
   return (
     <aside className={`
-      fixed inset-y-0 left-0 z-50 w-72 bg-white shadow-2xl transform transition-transform duration-300 ease-in-out p-6 overflow-y-auto
-      lg:relative lg:translate-x-0 lg:shadow-none lg:z-0 lg:block
-      ${isOpen ? "translate-x-0" : "-translate-x-full"}
+      fixed inset-y-0 left-0 z-50 w-72 bg-[#F9FBFC] transform transition-transform duration-300 ease-in-out p-6 overflow-y-auto
+      lg:relative lg:translate-x-0 lg:z-0 lg:block lg:border-r lg:border-gray-100 lg:bg-transparent
+      ${isOpen ? "translate-x-0 shadow-2xl" : "-translate-x-full lg:translate-x-0"}
     `}>
       <div className="flex justify-between items-center lg:hidden mb-6">
-        <h2 className="text-xl font-bold text-[#003366]">Filtros</h2>
+        <h2 className="text-xl font-teiu font-bold text-[#003366]">Filtros</h2>
         <button onClick={onClose}><X size={24} /></button>
       </div>
 
       <div className="space-y-8">
         {/* BUSCA RÁPIDA */}
         <div>
-          <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3 block">Pesquisar</span>
+          <span className="text-[10px] font-bold font-teiu text-gray-400 uppercase tracking-widest mb-3 block">Pesquisar</span>
           <input
             type="text"
             placeholder="Nome do produto..."
@@ -43,7 +43,7 @@ const SidebarFilters = ({ filters, setFilters, options, isOpen, onClose }) => {
 
         {/* MARCAS COM LOGO */}
         <div>
-          <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-4 block">
+          <span className="text-[10px] font-teiu font-bold text-gray-400 uppercase tracking-widest mb-4 block">
             Marcas
           </span>
           <div className="grid grid-cols-2 gap-2">
@@ -51,7 +51,7 @@ const SidebarFilters = ({ filters, setFilters, options, isOpen, onClose }) => {
               <button
                 key={brand}
                 onClick={() => handleSelect("brand", brand)}
-                className={`flex items-center justify-center p-2 h-16 rounded-xl border-2 transition-all ${filters.brand === brand
+                className={`flex items-center justify-center p-2 h-16 rounded-xl border-2 cursor-pointer transition-all  ${filters.brand === brand
                     ? "border-[#009FE3] bg-white shadow-md ring-1 ring-[#009FE3] scale-[1.02]"
                     : "border-gray-50 bg-gray-50 hover:bg-white hover:border-gray-200"
                   }`}
@@ -68,13 +68,13 @@ const SidebarFilters = ({ filters, setFilters, options, isOpen, onClose }) => {
 
         {/* CATEGORIAS */}
         <div>
-          <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3 block">Categoria</span>
+          <span className="text-[10px] font-bold font-teiu text-gray-400 uppercase tracking-widest mb-3 block">Categoria</span>
           <div className="flex flex-col gap-1">
             {options.categories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => handleSelect("category", cat)}
-                className={`text-left px-3 py-2 rounded-lg text-sm transition-all ${filters.category === cat ? "bg-[#003366] text-white" : "text-gray-600 hover:bg-gray-100"
+                className={`text-left px-3 py-2 rounded-lg text-sm font-teiu transition-all ${filters.category === cat ? "bg-[#003366] text-white" : "text-gray-600 hover:bg-gray-100"
                   }`}
               >
                 {cat}
@@ -85,7 +85,7 @@ const SidebarFilters = ({ filters, setFilters, options, isOpen, onClose }) => {
 
         {/* VOLUMES */}
         <div>
-          <span className="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-3 block">Volume</span>
+          <span className="text-[10px] font-teiu font-bold text-gray-400 uppercase tracking-widest mb-3 block">Volume</span>
           <div className="flex flex-wrap gap-2">
             {["500ml", "1L", "2L", "3L", "5L"].map((v) => (
               <button
@@ -102,7 +102,7 @@ const SidebarFilters = ({ filters, setFilters, options, isOpen, onClose }) => {
 
         <button
           onClick={() => setFilters({ search: '', category: '', brand: '', volume: '', fragrance: '' })}
-          className="w-full py-3 text-xs font-bold text-gray-400 hover:text-red-500 transition-colors border-t border-dashed mt-4"
+          className="w-full py-3 text-xs font-teiu  font-bold text-gray-400 hover:text-red-500 transition-colors border-t border-dashed mt-4"
         >
           LIMPAR TUDO
         </button>

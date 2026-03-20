@@ -6,7 +6,7 @@
   --color-teiu-deep-blue: #003b76;
   --color-teiu-blue-medium: #0050b9;
   --color-teiu-gray: #f5f5f5;
-  --font-teiu: "NobelUno", sans-serif;
+  --font-family-sans: "NobelUno", ui-sans-serif, system-ui, sans-serif;
 }
 
 @font-face {
@@ -59,4 +59,23 @@
 
 #root {
   overflow-x: hidden;
+}
+
+.bg-card-teiu-watermark {
+  position: relative;
+  border-radius: 35px;
+}
+
+.bg-card-teiu-watermark::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url('/assets/img/coracao.png');
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover; 
+  pointer-events: none;
+  border-radius: 30px;
+  opacity: 0.8;
+  z-index: 0;
 }

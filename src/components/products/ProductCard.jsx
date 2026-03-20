@@ -1,10 +1,10 @@
 const ProductCard = ({ title, imageUrl }) => {
     return (
-        <div className="group relative bg-[#E7EBEF] rounded-[35px] pt-8 pb-12 px-6 flex flex-col items-center justify-between 
-                        shadow-[0_20px_50px_rgba(0,0,0,0.2)] hover:shadow-[0_30px_60px_rgba(0,0,0,0.25)] 
-                        max-w-[310px] w-full mx-auto mt-6 mb-8 transition-all duration-300 ease-in-out">
+        <div className="group relative bg-[#E7EBEF] bg-card-teiu-watermark rounded-[35px] pt-8 pb-12 px-6 flex flex-col items-center justify-between 
+                shadow-[0_20px_50px_rgba(0,0,0,0.2)] hover:shadow-[0_30px_60px_rgba(0,0,0,0.25)] 
+                max-w-[310px] w-full mx-auto mt-6 mb-8 transition-all duration-300 ease-in-out">
 
-            <div className="w-full flex justify-center mb-5 h-[220px] overflow-visible">
+            <div className="w-full flex justify-center mb-5 h-[220px] overflow-visible relative z-10">
                 <img
                     src={imageUrl}
                     alt={title}
@@ -16,7 +16,7 @@ const ProductCard = ({ title, imageUrl }) => {
                 />
             </div>
 
-            <h3 className="text-[#003366] text-xl font-bold text-center leading-tight w-full">
+            <h3 className="relative z-10 text-[#003366] text-xl font-bold text-center leading-tight w-full">
                 {title}
             </h3>
 

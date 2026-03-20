@@ -20,7 +20,7 @@ function Navbar() {
         <ul className="flex gap-8 justify-center items-center">
           <li>
             <a 
-              onClick={() => navigate('/empresa')}
+              onClick={() => navigate('/aempresa')}
               className="cursor-pointer text-white hover:text-teiu-secondary transition-colors font-light"
             >
               A Empresa
@@ -47,7 +47,7 @@ function Navbar() {
 
           <li>
             <a 
-              onClick={() => navigate('/trabalhe')}
+              onClick={() => navigate('/trabalheconosco')}
               className="cursor-pointer text-white hover:text-teiu-secondary-light transition-colors font-light"
             >
               Trabalhe Conosco

@@ -45,11 +45,7 @@ function ProductsPage() {
                     onClick={() => setIsSidebarOpen(false)}
                 />
             )}
-
-            {/* Reduzi o pt-32 para pt-24 e o pb-24 para pb-12 para ganhar espaço no topo */}
             <div className="container mx-auto px-4 lg:px-8 pt-24 pb-12 max-w-[1400px] flex-grow">
-                
-                {/* Reduzi o gap-12 para gap-6 para aproximar a sidebar dos cards */}
                 <div className="flex flex-col lg:flex-row gap-6">
                     
                     <SidebarFilters 
@@ -61,10 +57,9 @@ function ProductsPage() {
                     />
 
                     <main className="flex-1">
-                        {/* Margem inferior do título reduzida de mb-10 para mb-6 */}
                         <div className="flex justify-between items-center mb-6">
                             <div>
-                                <h1 className="text-2xl lg:text-3xl font-normal text-black">
+                                <h1 className="text-2xl font-teiu lg:text-3xl font-semibold text-black">
                                     Nossos Produtos
                                 </h1>
                                 <p className="text-gray-400 text-xs mt-1">
@@ -81,7 +76,6 @@ function ProductsPage() {
                         </div>
 
                         {filteredProducts.length > 0 ? (
-                            /* Gap-y-16 reduzido para gap-y-10 para os cards ficarem mais próximos verticalmente */
                             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-x-6 gap-y-10">
                                 {filteredProducts.map((produto) => (
                                     <ProductCard

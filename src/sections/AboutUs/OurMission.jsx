@@ -17,27 +17,15 @@ const tabs = {
   vision: {
     title: "Nossa Visão",
     items: [
-      {
-        icon: "👁️",
-        text: "Ser referência no mercado com inovação e excelência.",
-      },
-      {
-        icon: "🚀",
-        text: "Crescer continuamente e impactar positivamente.",
-      },
+      { icon: "👁️", text: "Ser referência no mercado com inovação e excelência." },
+      { icon: "🚀", text: "Crescer continuamente e impactar positivamente." },
     ],
   },
   values: {
     title: "Nossos Valores",
     items: [
-      {
-        icon: "🤝",
-        text: "Ética, transparência e compromisso.",
-      },
-      {
-        icon: "💡",
-        text: "Inovação e foco no cliente.",
-      },
+      { icon: "🤝", text: "Ética, transparência e compromisso." },
+      { icon: "💡", text: "Inovação e foco no cliente." },
     ],
   },
 };
@@ -45,11 +33,12 @@ const tabs = {
 function OurMission() {
   const [activeTab, setActiveTab] = useState("mission");
   const [visible, setVisible] = useState(false);
+  const [isLeaving, setIsLeaving] = useState(false);
+
   const ref = useRef(null);
 
   const current = tabs[activeTab];
 
-  // 🔥 DETECÇÃO MELHORADA (URL + LOCAL + EXTENSÕES)
   const isImageUrl = (value) => {
     if (typeof value !== "string") return false;
 
@@ -64,6 +53,7 @@ function OurMission() {
     );
   };
 
+  // 🔥 ENTRADA
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -76,11 +66,38 @@ function OurMission() {
     return () => observer.disconnect();
   }, []);
 
+  // 🔥 SAÍDA
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!ref.current) return;
+
+      const rect = ref.current.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+
+      const exitStart = windowHeight * 0.55;
+
+      if (rect.top > exitStart) {
+        setIsLeaving(true);
+      } else {
+        setIsLeaving(false);
+      }
+    };
+
+    const onScroll = () => requestAnimationFrame(handleScroll);
+
+    window.addEventListener("scroll", onScroll);
+    handleScroll();
+
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
     <section
       ref={ref}
       className={`w-full py-20 text-white mb-40 transition-all duration-1000 ${
-        visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+        visible && !isLeaving
+          ? "opacity-100 translate-y-0"
+          : "opacity-0 translate-y-10"
       }`}
     >
       {/* Tabs */}
@@ -112,7 +129,7 @@ function OurMission() {
         {/* IMAGE */}
         <div
           className={`w-[300px] h-[200px] relative transition-all duration-1000 ${
-            visible
+            visible && !isLeaving
               ? "opacity-100 translate-x-0"
               : "opacity-0 -translate-x-10"
           }`}
@@ -125,8 +142,13 @@ function OurMission() {
         </div>
 
         {/* TEXT */}
-        <div className="max-w-xl w-full">
-          
+        <div
+          className={`max-w-xl w-full transition-all duration-1000 delay-200 ${
+            visible && !isLeaving
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 translate-y-6"
+          }`}
+        >
           <h2
             key={current.title}
             className="text-2xl font-semibold mb-6 animate-fadeSlide"
@@ -141,7 +163,6 @@ function OurMission() {
                 className="flex items-start gap-3 bg-[#01459A] p-4 rounded-xl shadow-md animate-fadeSlide"
                 style={{ animationDelay: `${index * 150}ms` }}
               >
-                {/* ICON INTELIGENTE */}
                 <span className="flex items-center justify-center w-12 h-12 mr-4 ml-4">
                   {isImageUrl(item.icon) ? (
                     <img
@@ -162,9 +183,6 @@ function OurMission() {
           </div>
         </div>
       </div>
-
-    
-
     </section>
   );
 }

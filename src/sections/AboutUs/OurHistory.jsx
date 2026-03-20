@@ -32,6 +32,7 @@ function OurHistory() {
 
   const visibleItems = showAll ? timeline : timeline.slice(0, 2);
 
+
   useEffect(() => {
     itemRefs.current = [];
   }, [showAll]);
@@ -57,58 +58,51 @@ function OurHistory() {
     return () => observer.disconnect();
   }, [visibleItems]);
 
-
+  
   useEffect(() => {
     const handleScroll = () => {
       if (ticking.current) return;
-    
+
       ticking.current = true;
-    
+
       requestAnimationFrame(() => {
         const container = containerRef.current;
-        if (!container) {
-          ticking.current = false;
-          return;
-        }
-    
-        const scrollTop = window.scrollY;
+        if (!container) return;
+
+        const rect = container.getBoundingClientRect();
         const windowHeight = window.innerHeight;
-    
-        const offsetTop = container.offsetTop;
-        const height = container.offsetHeight;
-    
+
         const triggerPoint = windowHeight * 0.75;
-    
+        const visible = triggerPoint - rect.top;
+        const total = rect.height;
+
         const progress = Math.min(
-          Math.max((scrollTop + triggerPoint - offsetTop) / (height * 1.2), 0),
+          Math.max(visible / (total * 1.2), 0),
           1
         );
-    
-        const calculatedLineHeight = progress * 100;
-    
 
-        setLineHeight(calculatedLineHeight);
-    
+        setLineHeight(progress * 100);
+
         const newActiveDots = [];
         const newLeaving = [];
-    
+
         itemRefs.current.forEach((el, index) => {
           if (!el) return;
-    
-          const itemTop = el.offsetTop;
-    
-          if (scrollTop + triggerPoint > itemTop) {
+
+          const itemRect = el.getBoundingClientRect();
+
+          if (itemRect.top < triggerPoint) {
             newActiveDots.push(index);
           }
-    
-          if (scrollTop + windowHeight < itemTop) {
+
+          if (itemRect.top > windowHeight * 0.85) {
             newLeaving.push(index);
           }
         });
-    
+
         setActiveDots(newActiveDots);
         setLeavingIndexes(newLeaving);
-    
+
         ticking.current = false;
       });
     };
@@ -123,6 +117,7 @@ function OurHistory() {
       clearTimeout(timeout);
     };
   }, [showAll]);
+
 
   const handleToggle = () => {
     setIsToggling(true);
@@ -158,7 +153,7 @@ function OurHistory() {
 
           return (
             <div
-              key={item.year} // 🔥 chave estável
+              key={item.year} 
               ref={(el) => (itemRefs.current[index] = el)}
               data-index={index}
               className={`relative w-full flex flex-col sm:flex-row items-start pt-6 mb-16 ${

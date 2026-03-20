@@ -3,8 +3,11 @@ import { useState, useEffect, useRef } from "react";
 function OurFacilities() {
   const [open, setOpen] = useState(false);
   const [visible, setVisible] = useState(false);
+  const [isLeaving, setIsLeaving] = useState(false);
+
   const sectionRef = useRef(null);
 
+  // 🔥 ENTRADA
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -22,6 +25,32 @@ function OurFacilities() {
     return () => observer.disconnect();
   }, []);
 
+  // 🔥 SAÍDA (efeito contrário)
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!sectionRef.current) return;
+
+      const rect = sectionRef.current.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+
+      const exitStart = windowHeight * 0.75;
+
+      // quando começa a sair pela parte de baixo
+      if (rect.top > exitStart) {
+        setIsLeaving(true);
+      } else {
+        setIsLeaving(false);
+      }
+    };
+
+    const onScroll = () => requestAnimationFrame(handleScroll);
+
+    window.addEventListener("scroll", onScroll);
+    handleScroll();
+
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
     <section
       ref={sectionRef}
@@ -29,10 +58,13 @@ function OurFacilities() {
     >
       <div className="max-w-7xl mx-auto flex flex-col lg:flex-row justify-around items-center gap-10">
         
+        {/* TEXTO */}
         <div
           className={`w-full max-w-[400px] transition-all duration-1000 ${
-            visible
+            visible && !isLeaving
               ? "opacity-100 translate-x-0"
+              : isLeaving
+              ? "opacity-0 -translate-x-20"
               : "opacity-0 -translate-x-20"
           }`}
         >
@@ -45,11 +77,14 @@ function OurFacilities() {
           </p>
         </div>
 
+        {/* IMAGEM */}
         <div
           onClick={() => setOpen(true)}
           className={`w-full lg:w-1/2 relative group cursor-pointer transition-all duration-1000 delay-200 ${
-            visible
+            visible && !isLeaving
               ? "opacity-100 translate-x-0"
+              : isLeaving
+              ? "opacity-0 translate-x-20"
               : "opacity-0 translate-x-20"
           }`}
         >
@@ -85,6 +120,8 @@ function OurFacilities() {
           </div>
         </div>
       </div>
+
+      {/* MODAL */}
       {open && (
         <div
           onClick={() => setOpen(false)}

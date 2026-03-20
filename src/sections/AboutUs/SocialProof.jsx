@@ -1,13 +1,40 @@
 import { Lightbulb, Rocket, Box } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 
 function SocialProof() {
+  const [visible, setVisible] = useState(false);
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+        }
+      },
+      { threshold: 0.2 }
+    );
+
+    if (ref.current) observer.observe(ref.current);
+
+    return () => observer.disconnect();
+  }, []);
+
   return (
-    <section className="w-full py-16 px-4 sm:px-8 flex justify-center">
+    <section
+      ref={ref}
+      className="w-full py-16 px-4 sm:px-8 flex justify-center"
+    >
       <div className="w-full max-w-6xl flex flex-col md:flex-row gap-6">
         
         {/* Card 1 */}
-        <div className="opacity-0 animate-fadeInUp delay-[0ms] flex-1 max-w-[380px] aspect-[5/4.6] bg-[rgba(255,255,255,0.31)] backdrop-blur-md rounded-2xl shadow-md border border-white/30 p-6 text-center relative flex flex-col justify-center items-center">
-          
+        <div
+          className={`flex-1 max-w-[380px] aspect-[5/4.6] bg-[rgba(255,255,255,0.31)] backdrop-blur-md rounded-2xl shadow-md border border-white/30 p-6 text-center relative flex flex-col justify-center items-center transition-all duration-700 ${
+            visible
+              ? "opacity-100 translate-y-0 scale-100"
+              : "opacity-0 translate-y-10 scale-95"
+          }`}
+        >
           <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-white rounded-full p-3 shadow-md border border-white/30">
             <Lightbulb className="w-9 h-9 text-gray-700" />
           </div>
@@ -22,8 +49,13 @@ function SocialProof() {
         </div>
 
         {/* Card 2 */}
-        <div className="opacity-0 animate-fadeInUp delay-[150ms] flex-1 max-w-[380px] aspect-[5/4.6] bg-[rgba(255,255,255,0.31)] backdrop-blur-md rounded-2xl shadow-md border border-white/30 p-6 text-center relative flex flex-col justify-center items-center">
-          
+        <div
+          className={`flex-1 max-w-[380px] aspect-[5/4.6] bg-[rgba(255,255,255,0.31)] backdrop-blur-md rounded-2xl shadow-md border border-white/30 p-6 text-center relative flex flex-col justify-center items-center transition-all duration-700 delay-200 ${
+            visible
+              ? "opacity-100 translate-y-0 scale-100"
+              : "opacity-0 translate-y-10 scale-95"
+          }`}
+        >
           <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-white rounded-full p-3 shadow-md border border-white/30">
             <Rocket className="w-9 h-9 text-gray-700" />
           </div>
@@ -39,8 +71,13 @@ function SocialProof() {
         </div>
 
         {/* Card 3 */}
-        <div className="opacity-0 animate-fadeInUp delay-[300ms] flex-1 max-w-[380px] aspect-[5/4.6] bg-[rgba(255,255,255,0.31)] backdrop-blur-md rounded-2xl shadow-md border border-white/30 p-6 text-center relative flex flex-col justify-center items-center">
-          
+        <div
+          className={`flex-1 max-w-[380px] aspect-[5/4.6] bg-[rgba(255,255,255,0.31)] backdrop-blur-md rounded-2xl shadow-md border border-white/30 p-6 text-center relative flex flex-col justify-center items-center transition-all duration-700 delay-500 ${
+            visible
+              ? "opacity-100 translate-y-0 scale-100"
+              : "opacity-0 translate-y-10 scale-95"
+          }`}
+        >
           <div className="absolute -top-5 left-1/2 -translate-x-1/2 bg-white rounded-full p-3 shadow-md border border-white/30">
             <Box className="w-9 h-9 text-gray-700" />
           </div>
@@ -53,26 +90,7 @@ function SocialProof() {
             16 milhões de kg produzidos mensalmente
           </p>
         </div>
-
       </div>
-
-      {/* Animação */}
-      <style jsx>{`
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(40px) scale(0.95);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-          }
-        }
-
-        .animate-fadeInUp {
-          animation: fadeInUp 0.8s ease forwards;
-        }
-      `}</style>
     </section>
   );
 }

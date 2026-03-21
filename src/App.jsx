@@ -3,6 +3,7 @@ import Home from "./pages/Home";
 import AboutUs from "./pages/AboutUs";
 import Products from "./pages/Products";
 import WorkWithUs from "./pages/WorkWithUs";
+import ConatctUs from "./pages/ContactUs";
 
 function App() {
   return (
@@ -12,6 +13,7 @@ function App() {
         <Route path="/aempresa" element={< AboutUs/>} />
         <Route path="/produtos" element={< Products/>} />
         <Route path="/trabalheconosco" element={< WorkWithUs/>} />
+        <Route path="/contato" element={< ConatctUs/>} />
       </Routes>
     </BrowserRouter>
   );

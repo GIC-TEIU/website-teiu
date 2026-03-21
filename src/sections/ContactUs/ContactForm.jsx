@@ -7,7 +7,7 @@ function ContactForm() {
           <div className="w-full lg:w-1/2 flex justify-center">
             <div className="w-full max-w-[500px] aspect-[653/687]">
               <img
-                src="/assets/img/faleconosco.jpg"
+                src="/assets/img/faleconosco.png"
                 alt="Contato"
                 className="w-full h-full object-cover rounded-3xl shadow-md"
               />
@@ -18,7 +18,7 @@ function ContactForm() {
           <div className="w-full lg:w-1/2 max-w-[520px]">
             
             {/* Tag */}
-            <span className="text-xs bg-gray-200 px-4 py-1 rounded-full text-gray-600">
+            <span className="text-xs bg-transparent border px-4 py-1 rounded-full text-gray-600">
               FALE COM A TEIU
             </span>
   
@@ -56,11 +56,11 @@ function ContactForm() {
               />
   
               {/* Botão */}
-              <button className="mt-3 flex items-center justify-between bg-[#E0F896]  hover:opacity-90 transition px-6 py-3 rounded-full font-medium text-gray-900 shadow-sm">
+              <button className="mt-3 flex cursor-pointer items-center justify-between bg-[#E0F896]  hover:opacity-90 transition px-6 py-3 rounded-full font-medium text-gray-900 shadow-sm">
                 ENVIAR MENSAGEM
                   
                 <span className="bg-white rounded-full w-8 h-8 flex items-center justify-center shadow">
-                
+                 <img src="/assets/img/arrow.svg" alt="" />
                 </span>
               </button>
   

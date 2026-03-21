@@ -34,7 +34,7 @@ function BannerContactSession() {
         />
 
         <CardContact
-        icon="/assets/img/whatsapp.svg"
+        icon="/assets/img/wpp.svg"
         title="No WhatsApp"
         description="(00) 00000-0000"
         />

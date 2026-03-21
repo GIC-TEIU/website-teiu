@@ -1,6 +1,5 @@
 import CardContact from "../../components/CardContact";
-import Navbar from "../../components/navbar";
-
+import Navbar from "../../components/Navbar";
 function BannerContactSession() {
   return (
     <div className="w-full h-[90vh] relative">

@@ -180,7 +180,7 @@ function OurHistory() {
               >
                 <img
                   src={item.image}
-                  alt=""
+                  alt={`image${item.year}`}
                   className="w-full rounded-lg shadow-md"
                 />
               </div>

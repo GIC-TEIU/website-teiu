@@ -105,14 +105,21 @@ function ProductsSession() {
             }}
             className="pb-16 !static" 
           >
-            {produtosEmDestaque.map((item) => (
-              <SwiperSlide key={item.id} className="h-full py-4">
-                <ProductCard {...item} />
-              </SwiperSlide>
-            ))}
+              {produtosEmDestaque.map((item) => (
+                <SwiperSlide 
+                  key={`${item.parentId}-${item.id}`} 
+                  className="h-full py-4"
+                >
+                  <ProductCard 
+                    title={item.title}
+                    image={item.image} 
+                    parentId={item.parentId} 
+                    variantId={item.id}
+                  />
+                </SwiperSlide>
+              ))}
           </Swiper>
 
-          {/* Setas de navegação */}
           <button className="btn-prev absolute left-[-20px] top-1/2 -translate-y-1/2 z-30 w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-800 opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-gray-50 cursor-pointer border border-gray-100">
             <ChevronLeft size={24} />
           </button>
@@ -123,8 +130,9 @@ function ProductsSession() {
         </div>
       </div>
 
-      <style jsx global>{`
+      <style>{`
         .swiper-button-next, .swiper-button-prev { display: none !important; }
+        .swiper-pagination-bullet-active { background: #009FE3 !important; }
       `}</style>
     </section>
   );

@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import Navbar from "../components/Navbar";
+import Navbar from "../components/navbar";
 import { produtosTeiu } from "../mocks/Products";
 import ProductCard from "../components/products/ProductCard";
 import SidebarFilters from "../components/products/SidebarFilters";
@@ -81,7 +81,9 @@ function ProductsPage() {
                                     <ProductCard
                                         key={produto.id}
                                         title={produto.title}
-                                        imageUrl={produto.imageUrl}
+                                        image={produto.image}
+                                        parentId={produto.parentId}
+                                        variantId={produto.id}
                                     />
                                 ))}
                             </div>

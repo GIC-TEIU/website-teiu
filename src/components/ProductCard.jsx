@@ -1,10 +1,15 @@
-import React from 'react'
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-function ProductCard({ title, author, description, imageUrl }) {
+function ProductCard({ title, image, parentId, variantId }) {
   return (
-    <div className="relative w-full max-w-[280px] aspect-[3/4] rounded-[20px] bg-white shadow-sm 
-                    hover:shadow-xl transition-shadow duration-500 flex flex-col items-center p-8 
-                    cursor-pointer overflow-hidden border border-gray-100">
+    <Link 
+      to={`/produto/${parentId}`} 
+      state={{ variantId }} 
+      className="relative w-full max-w-[280px] aspect-[3/4] rounded-[20px] bg-white shadow-sm 
+                 hover:shadow-xl transition-shadow duration-500 flex flex-col items-center p-8 
+                 cursor-pointer overflow-hidden border border-gray-100 group block"
+    >
       
       <div className="z-10 text-center mb-6">
         <h3 className="font-teiu font-bold text-2xl leading-tight text-teiu-primary-dark">
@@ -13,12 +18,12 @@ function ProductCard({ title, author, description, imageUrl }) {
       </div>
 
       <div className="relative flex-grow w-full flex items-center justify-center">
-        {imageUrl ? (
+        {image ? (
           <img 
-            className="h-full w-auto object-contain transition-all ransition-all duration-500 ease-in-out 
-                    hover:scale-[1.06] 
-                       hover:drop-shadow-[0_20px_20px_rgba(0,0,0,0.15)]" 
-            src={imageUrl} 
+            className="h-full w-auto object-contain transition-all duration-500 ease-in-out 
+                       group-hover:scale-[1.06] 
+                       group-hover:drop-shadow-[0_20px_20px_rgba(0,0,0,0.15)]" 
+            src={image} 
             alt={title} 
           />
         ) : (
@@ -27,8 +32,12 @@ function ProductCard({ title, author, description, imageUrl }) {
           </div>
         )}
       </div>
-    </div>
-  )
+
+      <div className="mt-4 text-teiu-primary font-bold text-sm uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity">
+        Saiba mais
+      </div>
+    </Link>
+  );
 }
 
 export default ProductCard;

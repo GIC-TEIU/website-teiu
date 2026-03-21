@@ -1,9 +1,9 @@
 import Navbar from "../components/navbar"
-import ProductsHome from "../sections/ProductsHome"
-import Hero from "../sections/Hero"
+import ProductsHome from "../sections/Home/ProductsHome"
+import Hero from "../sections/Home/Hero"
 import Footer from "../components/Footer"
-import InstitutionalVideo from "../sections/VideoPage"
-import InstagramSection from "../sections/InstagramSection"
+import InstitutionalVideo from "../sections/Home/VideoPage"
+import InstagramSection from "../sections/Home/InstagramSection"
 
 function Home() {
     return ( 

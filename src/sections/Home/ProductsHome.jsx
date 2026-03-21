@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { useNavigate } from 'react-router-dom';
 import { Navigation, Pagination } from 'swiper/modules';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
@@ -7,13 +8,18 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 
-import ProductCard from '../components/ProductCard';
-import { produtosTeiu } from '../mocks/Products';
+import ProductCard from '../../components/ProductCard';
+import { produtosTeiu } from '../../mocks/Products';
 
 function ProductsSession() {
+  const navigate = useNavigate();
   const [visible, setVisible] = useState(false);
   const [isLeaving, setIsLeaving] = useState(false);
   const sectionRef = useRef(null);
+
+  const produtosEmDestaque = useMemo(() => {
+    return produtosTeiu.filter(produto => produto.featured);
+  }, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -70,7 +76,10 @@ function ProductsSession() {
           <h2 className="text-2xl font-bold text-black tracking-tight font-teiu">
             Nossos Produtos
           </h2>
-          <button className="flex items-center gap-2 text-sm font-medium border border-gray-300 rounded-full px-5 py-2 text-gray-700 hover:bg-white transition-all cursor-pointer shadow-sm font-teiu">
+          <button 
+            onClick={() => navigate('/produtos')} 
+            className="flex items-center gap-2 text-sm font-medium border border-gray-300 rounded-full px-5 py-2 text-gray-700 hover:bg-white transition-all cursor-pointer shadow-sm font-teiu"
+          >
             Ver todos <ChevronRight size={16} />
           </button>
         </div>
@@ -96,7 +105,7 @@ function ProductsSession() {
             }}
             className="pb-16 !static" 
           >
-            {produtosTeiu.map((item) => (
+            {produtosEmDestaque.map((item) => (
               <SwiperSlide key={item.id} className="h-full py-4">
                 <ProductCard {...item} />
               </SwiperSlide>

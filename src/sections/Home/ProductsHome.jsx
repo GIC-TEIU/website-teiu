@@ -7,9 +7,8 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
-
-import ProductCard from '../../components/ProductCard';
-import { produtosTeiu } from '../../mocks/Products';
+import {productsMock } from '../../mocks/Products';
+import ProductCard from '../../components/products/ProductCard';
 
 function ProductsSession() {
   const navigate = useNavigate();
@@ -17,9 +16,11 @@ function ProductsSession() {
   const [isLeaving, setIsLeaving] = useState(false);
   const sectionRef = useRef(null);
 
-  const produtosEmDestaque = useMemo(() => {
-    return produtosTeiu.filter(produto => produto.featured);
-  }, []);
+ const produtosEmDestaque = useMemo(() => {
+    return productsMock.filter(produto => 
+        produto.variants.some(v => v.featured) 
+    );
+}, []);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -105,18 +106,13 @@ function ProductsSession() {
             }}
             className="pb-16 !static" 
           >
-              {produtosEmDestaque.map((item) => (
-                <SwiperSlide 
-                  key={`${item.parentId}-${item.id}`} 
+            {produtosEmDestaque.map((item) => (
+              <SwiperSlide 
+                  key={item.id} 
                   className="h-full py-4"
-                >
-                  <ProductCard 
-                    title={item.title}
-                    image={item.image} 
-                    parentId={item.parentId} 
-                    variantId={item.id}
-                  />
-                </SwiperSlide>
+              >
+                  <ProductCard product={item} /> 
+              </SwiperSlide>
               ))}
           </Swiper>
 

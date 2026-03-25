@@ -1,6 +1,6 @@
 import { useState, useMemo } from "react";
 import Navbar from "../components/navbar";
-import { produtosTeiu } from "../mocks/Products";
+import { productsMock } from "../mocks/Products";
 import ProductCard from "../components/products/ProductCard";
 import SidebarFilters from "../components/products/SidebarFilters";
 import { Filter, ChevronUp } from "lucide-react";
@@ -17,13 +17,13 @@ function ProductsPage() {
     });
 
     const options = useMemo(() => ({
-        brands: [...new Set(produtosTeiu.map(p => p.brand))],
-        categories: [...new Set(produtosTeiu.map(p => p.category))],
-        volumes: [...new Set(produtosTeiu.map(p => p.volume))],
+        brands: [...new Set(productsMock.map(p => p.brand))],
+        categories: [...new Set(productsMock.map(p => p.category))],
+        volumes: [...new Set(productsMock.map(p => p.volume))],
     }), []);
 
     const filteredProducts = useMemo(() => {
-        return produtosTeiu.filter(product => {
+        return productsMock.filter(product => {
             const matchesSearch = product.title.toLowerCase().includes(filters.search.toLowerCase());
             const matchesCategory = !filters.category || product.category === filters.category;
             const matchesBrand = !filters.brand || product.brand === filters.brand;
@@ -78,12 +78,9 @@ function ProductsPage() {
                         {filteredProducts.length > 0 ? (
                             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-x-6 gap-y-10">
                                 {filteredProducts.map((produto) => (
-                                    <ProductCard
-                                        key={produto.id}
-                                        title={produto.title}
-                                        image={produto.image}
-                                        parentId={produto.parentId}
-                                        variantId={produto.id}
+                                 <ProductCard
+                                    key={produto.id}
+                                    product={produto} // Passamos o objeto completo conforme o novo Card exige
                                     />
                                 ))}
                             </div>

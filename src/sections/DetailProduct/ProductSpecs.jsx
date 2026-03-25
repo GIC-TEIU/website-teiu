@@ -2,33 +2,30 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 function ProductSpecs({ specs, activeColor }) {
-  const items = [
-    { value: specs.volumes, label: "Volumes disponíveis" },
-    { value: specs.fragrancias, label: "Fragrâncias disponíveis" },
-    { value: specs.especial, label: "Edição Especial" },
-  ];
-
   return (
     <section className="bg-white py-20 px-12 lg:px-24 font-teiu">
-      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 text-center text-teiu-deep-blue">
-        {items.map((item, index) => (
+      <div className="max-w-xl flex flex-col gap-8 text-teiu-deep-blue">
+        {specs.map((item, index) => (
           <motion.div 
             key={index}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.5 }}
-            transition={{ duration: 0.6, delay: index * 0.2 }}
-            className="flex flex-col items-center"
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: index * 0.1 }}
+            className="flex flex-row items-start gap-5"
           >
             <span 
-              className="text-8xl md:text-9xl font-black leading-none items-center"
+              className="text-7xl md:text-8xl font-black leading-[0.8] tracking-tighter"
               style={{ color: activeColor }} 
             >
               {item.value}
             </span>
-            <span className="text-xl font-bold mt-4 uppercase max-w-[150px] leading-tight text-center">
-              {item.label}
-            </span>
+
+            <div className="flex flex-col mt-1">
+              <span className="text-xl md:text-2xl font-bold uppercase leading-[1.1] max-w-[180px] text-left">
+                {item.label}
+              </span>
+            </div>
           </motion.div>
         ))}
       </div>

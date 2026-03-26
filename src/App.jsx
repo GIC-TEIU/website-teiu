@@ -5,6 +5,7 @@ import Products from "./pages/Products";
 import WorkWithUs from "./pages/WorkWithUs";
 import ProductDetail from "./pages/ProductDetail";
 import ConatctUs from "./pages/ContactUs";
+import SustentabilidadePage from "./pages/SustentabilidadePage";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/produto/:id" element={<ProductDetail />} />
         <Route path="/trabalheconosco" element={< WorkWithUs/>} />
         <Route path="/contato" element={< ConatctUs/>} />
+        <Route path="/sustentabilidade" element={<SustentabilidadePage />} />
       </Routes>
     </BrowserRouter>
   );

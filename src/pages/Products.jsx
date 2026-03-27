@@ -1,9 +1,10 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import Navbar from "../components/navbar";
 import { productsMock } from "../mocks/Products";
 import ProductCard from "../components/products/ProductCard";
 import SidebarFilters from "../components/products/SidebarFilters";
-import { Filter, ChevronUp } from "lucide-react";
+import Pagination from "../components/Pagination"; 
+import { Filter, ChevronUp } from "lucide-react"; 
 import Footer from "../components/Footer";
 
 function ProductsPage() {
@@ -15,6 +16,9 @@ function ProductsPage() {
         volume: '',
         fragrance: ''
     });
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 6;
 
     const options = useMemo(() => ({
         brands: [...new Set(productsMock.map(p => p.brand))],
@@ -35,8 +39,22 @@ function ProductsPage() {
         });
     }, [filters]);
 
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [filters]);
+
+    const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+    const currentProducts = filteredProducts.slice(startIndex, endIndex);
+
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
     return (
-        <div className="min-h-screen bg-white flex flex-col">
+        <div className="min-h-screen bg-[#F8F9FA] flex flex-col">
             <Navbar />
 
             {isSidebarOpen && (
@@ -76,16 +94,24 @@ function ProductsPage() {
                         </div>
 
                         {filteredProducts.length > 0 ? (
-                            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-x-6 gap-y-10">
-                                {filteredProducts.map((produto) => (
-                                 <ProductCard
-                                    key={produto.id}
-                                    product={produto} // Passamos o objeto completo conforme o novo Card exige
-                                    />
-                                ))}
-                            </div>
+                            <>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-x-6 gap-y-10">
+                                    {currentProducts.map((produto) => (
+                                     <ProductCard
+                                        key={produto.id}
+                                        product={produto}
+                                        />
+                                    ))}
+                                </div>
+
+                                <Pagination 
+                                    currentPage={currentPage} 
+                                    totalPages={totalPages} 
+                                    onPageChange={handlePageChange} 
+                                />
+                            </>
                         ) : (
-                            <div className="text-center py-20 border-2 border-dashed border-gray-100 rounded-3xl">
+                            <div className="text-center py-20 border-2 border-dashed border-gray-100 rounded-3xl bg-white">
                                 <p className="text-gray-400">Nenhum produto encontrado.</p>
                                 <button 
                                     onClick={() => setFilters({ search: '', category: '', brand: '', volume: '', fragrance: '' })}

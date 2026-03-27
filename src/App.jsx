@@ -6,6 +6,7 @@ import WorkWithUs from "./pages/WorkWithUs";
 import ProductDetail from "./pages/ProductDetail";
 import ConatctUs from "./pages/ContactUs";
 import SustentabilidadePage from "./pages/SustentabilidadePage";
+import TeiuAdventure from "./pages/TeiuAdventure";
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="/trabalheconosco" element={< WorkWithUs/>} />
         <Route path="/contato" element={< ConatctUs/>} />
         <Route path="/sustentabilidade" element={<SustentabilidadePage />} />
+        <Route path="/teiu-adventure" element={< TeiuAdventure/>} />
       </Routes>
     </BrowserRouter>
   );

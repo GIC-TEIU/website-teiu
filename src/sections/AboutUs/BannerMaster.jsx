@@ -11,7 +11,7 @@ function BannerMaster({ title, text }) {
           setVisible(true);
         }
       },
-      { threshold: 0.3 }
+      { threshold: 0.1 }
     );
 
     if (bannerRef.current) {
@@ -22,30 +22,30 @@ function BannerMaster({ title, text }) {
   }, []);
 
   return (
-    <>
-      <div
-        ref={bannerRef}
-        className="bg-[url('/assets/img/capa-aboutus.jpg')] bg-cover bg-center h-[90vh] w-screen flex items-center justify-start text-white px-[150px]"
-      >
-        {title && text && (
-          <div
-            className={`content-title max-w-[500px] bg-[#00000091] p-4 rounded-sm transition-all duration-1000 ${
-              visible
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-10"
-            }`}
-          >
-            <h1 className="text-4xl font-bold mb-4">
-              {title}
-            </h1>
+    <section
+      ref={bannerRef}
+      className="relative bg-[url('/assets/img/capa-aboutus.jpg')] bg-cover bg-[80%_center] md:bg-right h-[70vh] md:h-[90vh] w-full flex items-center justify-start text-white px-6 sm:px-12 md:px-[100px] lg:px-[150px]"
+    >
+      <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/20 to-transparent md:hidden" />
 
-            <p className="text-[#e1e1e1]">
-              {text}
-            </p>
-          </div>
-        )}
-      </div>
-    </>
+      {title && text && (
+        <div
+          className={`relative z-10 w-[85%] sm:w-[70%] max-w-xl bg-black/60 md:bg-black/50 p-6 md:p-8 rounded-lg backdrop-blur-sm transition-all duration-1000 ease-out ${
+            visible
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 translate-y-10"
+          }`}
+        >
+          <h1 className="text-3xl md:text-5xl font-bold mb-4 leading-tight">
+            {title}
+          </h1>
+
+          <p className="text-sm md:text-lg text-gray-200 leading-relaxed">
+            {text}
+          </p>
+        </div>
+      )}
+    </section>
   );
 }
 

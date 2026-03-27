@@ -120,5 +120,51 @@ export const productsMock = [
     variants: [
       { id: 501, label: "Tradicional", color: "#F9A8D4", image: "/assets/img/TEIÚ - AMACIANTE AMOR 2L.png", featured: true }
     ]
-  }
+  },
+  {
+    id: 13,
+    title: "Vatz Extreme",
+    volume: "500ml",
+    tagline: "A força da limpeza extrema para superfícies",
+    category: "Multiuso",
+    brand: "Vatz",
+    usage: "Aplique sobre a superfície a ser limpa e remova com um pano úmido. Não necessita enxágue.",
+    specs: [
+      { value: 1, label: "Volume" },
+      { value: 1, label: "Espuma Ativa" },
+      { value: 0, label: "Edição Especial" }
+    ],
+    variants: [
+      { 
+        id: 202, 
+        label: "Extreme Espuma", 
+        color: "#1e1a2d", 
+        image: "/assets/img/vatz1.png",
+        featured: true 
+      }
+    ]
+  },
+  {
+    id: 20,
+    title: "Gel Pinho Lavanda",
+    volume: "500ml",
+    tagline: "A força da limpeza extrema para superfícies",
+    category: "Multiuso",
+    brand: "teiu",
+    usage: "Aplique sobre a superfície a ser limpa e remova com um pano úmido. Não necessita enxágue.",
+    specs: [
+      { value: 1, label: "Volume" },
+      { value: 1, label: "Espuma Ativa" },
+      { value: 0, label: "Edição Especial" }
+    ],
+    variants: [
+      { 
+        id: 206, 
+        label: "Gel Pinho", 
+        color: "#1e1a2d", 
+        image: "/assets/img/gel.png",
+        featured: true 
+      }
+    ]
+  },
 ];

@@ -7,19 +7,21 @@ import ProductDetail from "./pages/ProductDetail";
 import ConatctUs from "./pages/ContactUs";
 import SustentabilidadePage from "./pages/SustentabilidadePage";
 import TeiuAdventure from "./pages/TeiuAdventure";
+import AcessibilidadeBar from "./components/acessibilidade/AcessibilidadeBar";
 
 function App() {
   return (
     <BrowserRouter>
+      <AcessibilidadeBar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/aempresa" element={< AboutUs/>} />
-        <Route path="/produtos" element={< Products/>} />
+        <Route path="/aempresa" element={<AboutUs />} />
+        <Route path="/produtos" element={<Products />} />
         <Route path="/produto/:id" element={<ProductDetail />} />
-        <Route path="/trabalheconosco" element={< WorkWithUs/>} />
-        <Route path="/contato" element={< ConatctUs/>} />
+        <Route path="/trabalheconosco" element={<WorkWithUs />} />
+        <Route path="/contato" element={<ConatctUs />} />
         <Route path="/sustentabilidade" element={<SustentabilidadePage />} />
-        <Route path="/teiu-adventure" element={< TeiuAdventure/>} />
+        <Route path="/teiu-adventure" element={<TeiuAdventure />} />
       </Routes>
     </BrowserRouter>
   );

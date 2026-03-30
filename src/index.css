@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 @theme {
   --color-teiu-primary-dark: #11215f;
   --color-teiu-secondary-light: #00cdf7;
@@ -78,4 +82,21 @@
   border-radius: 30px;
   opacity: 0.8;
   z-index: 0;
+}
+
+@layer base {
+  body.alto-contraste,
+  body.alto-contraste * {
+    @apply !bg-black !text-white !border-white;
+  }
+
+  /* Destaca os links em amarelo */
+  body.alto-contraste a {
+    @apply !text-yellow-400 underline;
+  }
+}
+
+/* Força o botão do VLibras a ficar sempre na frente */
+.enabled[vw="true"] {
+  z-index: 999999 !important;
 }

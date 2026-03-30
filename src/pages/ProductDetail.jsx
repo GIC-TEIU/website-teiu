@@ -8,7 +8,7 @@ import {
 import { useLocation, useParams } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
 import { productsMock } from "../mocks/Products";
-import Navbar from "../components/navbar";
+import Navbar from "../components/Navbar";
 
 function lerp(a, b, t) {
   return a + (b - a) * Math.max(0, Math.min(1, t));

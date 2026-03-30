@@ -4,12 +4,11 @@ import Footer from '../components/Footer';
 import RodaSustentabilidade from '../components/RodaSustentabilidade';
 
 const SustentabilidadePage = () => {
-
-    
   return (
     <div className="bg-white flex flex-col">
       <Navbar />
       
+      {/* Hero Section */}
       <div className="relative w-full h-[80vh] md:h-[100vh] flex flex-col items-center justify-center text-center"> 
         <div className="absolute inset-0 z-0 overflow-hidden">
           <img 
@@ -21,6 +20,10 @@ const SustentabilidadePage = () => {
       </div>
       
       <RodaSustentabilidade />
+
+      <div className="w-full bg-gradient-to-r from-[#009FE3] to-[#03479A]">
+          <Footer />
+      </div>
     </div>
   );
 };

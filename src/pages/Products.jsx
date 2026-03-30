@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect } from "react";
-import Navbar from "../components/navbar";
+import Navbar from "../components/Navbar";
 import { productsMock } from "../mocks/Products";
 import ProductCard from "../components/products/ProductCard";
 import SidebarFilters from "../components/products/SidebarFilters";

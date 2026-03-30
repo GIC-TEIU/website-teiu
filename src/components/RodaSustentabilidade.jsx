@@ -1,35 +1,45 @@
-import React, { useRef, useState } from 'react';
-import { motion, useScroll, useTransform, useMotionValueEvent, AnimatePresence } from 'framer-motion';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { sustentabilidadeItems } from '../mocks/sustentabilidadeDados';
 
 const RodaSustentabilidade = () => {
-  const sectionRef = useRef(null);
   const [activeIndex, setActiveIndex] = useState(0);
+  
+  const n = sustentabilidadeItems.length;
+  const sliceAngle = 360 / n;
 
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ['start start', 'end end'],
-  });
+  useEffect(() => {
+    if (n <= 1) return; 
 
-  const rotateWheel = useTransform(scrollYProgress, [0, 1], [0, -162]);
+    const interval = setInterval(() => {
+      setActiveIndex((prevIndex) => (prevIndex + 1) % n);
+    }, 4000); 
 
-  useMotionValueEvent(scrollYProgress, 'change', (latest) => {
-    const n = sustentabilidadeItems.length;
-    const index = Math.min(Math.floor(latest * n), n - 1);
-    setActiveIndex(index);
-  });
+    return () => clearInterval(interval);
+  }, [n]);
 
+ 
+  const corInativa = "#C0DDB6"; 
+
+  // fatia ativa fica com a cor verdadeira, as demais ficam neutras.
   const wheelGradient = `conic-gradient(${sustentabilidadeItems
-    .map((item, i) => `${item.color} ${i * 90}deg ${(i + 1) * 90}deg`)
+    .map((item, index) => {
+      const isAtivo = activeIndex === index;
+      const colorToUse = isAtivo ? item.color : corInativa;
+      return `${colorToUse} ${index * sliceAngle}deg ${(index + 1) * sliceAngle}deg`;
+    })
     .join(', ')})`;
 
+  const currentRotation = -(activeIndex * sliceAngle);
+
   return (
-    <section ref={sectionRef} className="relative min-h-[100vh] bg-white font-teiu w-full">
-      <div className="sticky top-0 h-screen w-full flex flex-col bg-white overflow-hidden">
+    <section className="relative bg-white font-teiu w-full py-16 md:py-20 overflow-hidden">
+      
+      <div className="w-full flex flex-col items-center max-w-[1400px] mx-auto">
 
         {/* Cabeçalho */}
-        <div className="text-center pt-12 px-6 shrink-0">
-          <h2 className="text-3xl md:text-4xl font-extrabold text-black mb-3">
+        <div className="text-center px-6 shrink-0 z-20 mb-10 md:mb-16">
+          <h2 className="text-3xl md:text-4xl lg:text-4xl text-[#003366] font-extrabold mb-4">
             Sustentabilidade na Teiú
           </h2>
           <p className="text-base md:text-lg text-gray-700 leading-relaxed max-w-2xl mx-auto">
@@ -38,41 +48,38 @@ const RodaSustentabilidade = () => {
           </p>
         </div>
 
-        {/* Conteúdo principal: roda à esquerda, texto à direita */}
-        <div className="flex-1 flex flex-col md:flex-row items-center justify-center gap-10 md:gap-16 px-6 py-8">
-
-          {/* roda*/}
+        <div className="w-full flex flex-col md:flex-row items-center justify-center gap-8 md:gap-16 lg:gap-24 px-6">
+          
+          {/* Container da Roda */}
           <div
             className="
               relative flex items-center justify-center shrink-0
-              w-[280px] h-[280px]
-              sm:w-[340px] sm:h-[340px]
-              md:w-[420px] md:h-[420px]
+              w-[240px] h-[240px]
+              sm:w-[300px] sm:h-[300px]
+              md:w-[360px] md:h-[360px]
+              lg:w-[420px] lg:h-[420px]
             "
           >
+            {/* Roda que Gira */}
             <motion.div
-              style={{ rotate: rotateWheel }}
-              className="relative w-full h-full rounded-full shadow-2xl"
+              animate={{ rotate: currentRotation }}
+              transition={{ duration: 0.8, ease: "easeInOut" }}
+              className="absolute inset-0 rounded-full shadow-2xl"
             >
+              {/* Cores Dinâmicas da Roda */}
               <div
-                className="absolute inset-0 rounded-full"
+                className="absolute inset-0 rounded-full transition-all duration-500"
                 style={{ background: wheelGradient }}
               />
 
-              <div
-                className="
-                  absolute bg-white rounded-full z-10
-                  inset-[70px]
-                  sm:inset-[85px]
-                  md:inset-[105px]
-                "
-              />
-
+              {/* Ícones viajando com a roda */}
               {sustentabilidadeItems.map((item, index) => {
                 const Icon = item.icon;
-                const angleDeg = -90 + index * 90 + 45;
+                const angleDeg = -90 + (index * sliceAngle) + (sliceAngle / 2);
                 const angleRad = (angleDeg * Math.PI) / 180;
-                const r = 35; 
+                const r = 36; 
+                
+                const isAtivo = activeIndex === index;
 
                 return (
                   <div
@@ -84,41 +91,53 @@ const RodaSustentabilidade = () => {
                       transform: 'translate(-50%, -50%)',
                     }}
                   >
-                    <Icon
-                      className="
-                        text-white
-                        w-6 h-6
-                        sm:w-7 sm:h-7
-                        md:w-9 md:h-9
-                      "
-                      strokeWidth={2}
-                    />
+                    {/* Mantém os ícones em pé */}
+                    <motion.div
+                      animate={{ rotate: -currentRotation }}
+                      transition={{ duration: 0.8, ease: "easeInOut" }}
+                    >
+                      <Icon
+                        className={`${isAtivo ? 'text-white drop-shadow-md' : 'text-gray-400'} w-6 h-6 sm:w-7 sm:h-7 md:w-8 md:h-8 lg:w-10 lg:h-10 transition-colors duration-500`}
+                        strokeWidth={2}
+                      />
+                    </motion.div>
                   </div>
                 );
               })}
             </motion.div>
+
+            {/* Círculo branco interno */}
+            <div
+              className="
+                absolute bg-white rounded-full z-40 shadow-[inset_0_4px_10px_rgba(0,0,0,0.1)]
+                inset-[60px]
+                sm:inset-[75px]
+                md:inset-[90px]
+                lg:inset-[105px]
+              "
+            />
           </div>
 
-          {/*textos */}
-          <div className="relative w-full max-w-md min-h-[180px] md:min-h-[220px] flex items-center">
+          {/* Textos que alternam */}
+          <div className="relative w-full max-w-md min-h-[160px] md:min-h-[200px] flex items-center z-20">
             <AnimatePresence mode="wait">
               {sustentabilidadeItems.map((item, index) =>
                 activeIndex === index ? (
                   <motion.div
                     key={item.id}
-                    initial={{ opacity: 0, y: 24 }}
+                    initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -24 }}
-                    transition={{ duration: 0.35, ease: 'easeOut' }}
-                    className="w-full flex flex-col gap-4 text-center md:text-left"
+                    exit={{ opacity: 0, y: -20 }}
+                    transition={{ duration: 0.4, ease: 'easeOut' }}
+                    className="w-full flex flex-col gap-3 md:gap-4 text-center md:text-left"
                   >
                     <span
-                      className="text-4xl sm:text-5xl md:text-6xl font-extrabold leading-tight"
+                      className="text-3xl sm:text-4xl lg:text-5xl font-extrabold leading-tight drop-shadow-sm"
                       style={{ color: item.color }}
                     >
                       {item.title}
                     </span>
-                    <p className="text-base md:text-lg leading-relaxed text-gray-700">
+                    <p className="text-sm md:text-base lg:text-lg leading-relaxed text-gray-700">
                       {item.description}
                     </p>
                   </motion.div>
@@ -128,19 +147,23 @@ const RodaSustentabilidade = () => {
           </div>
         </div>
 
-        <div className="flex justify-center gap-2 pb-6 shrink-0">
+        {/* Paginação */}
+        <div className="flex justify-center items-center gap-3 shrink-0 z-20 mt-12">
           {sustentabilidadeItems.map((item, index) => (
-            <div
+            <button
               key={item.id}
-              className="rounded-full transition-all duration-300"
+              onClick={() => setActiveIndex(index)} 
+              className="rounded-full transition-all duration-300 shadow-sm cursor-pointer"
               style={{
-                width: activeIndex === index ? '20px' : '8px',
-                height: '8px',
-                background: activeIndex === index ? item.color : '#D1D5DB',
+                width: activeIndex === index ? '28px' : '10px',
+                height: '10px',
+                background: activeIndex === index ? item.color : '#E5E7EB',
               }}
+              aria-label={`Ir para ${item.title}`}
             />
           ))}
         </div>
+        
       </div>
     </section>
   );

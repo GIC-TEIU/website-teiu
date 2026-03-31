@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Menu, X, ChevronDown } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
+import LanguageToggle from './acessibilidade/LanguageToggle';
 
 function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
   const [isOpen, setIsOpen] = useState(false);
-  
   const [isProjectsOpen, setIsProjectsOpen] = useState(false);
+  const { t } = useTranslation();
   const isActive = (path) => location.pathname === path;
   const isParentActive = (subItems) => subItems?.some(sub => isActive(sub.path));
   const linkStyle = (path, subItems = null) => `
@@ -18,18 +20,18 @@ function Navbar() {
   `;
 
   const navItems = [
-    { name: 'A Empresa', path: '/aempresa' },
-    { name: 'Nossas Marcas', path: '/marcas' },
-    { name: 'Nossos Produtos', path: '/produtos' },
+    { name: t('menu.empresa'), path: '/aempresa' },
+    { name: t('menu.marcas', 'Nossas Marcas'), path: '/marcas' }, // O segundo argumento é o texto padrão se falhar
+    { name: t('menu.produtos'), path: '/produtos' },
     { 
-      name: 'Nossos Projetos', 
+      name: t('menu.projetos', 'Nossos Projetos'), 
       subItems: [
-        { name: 'Sustentabilidade', path: '/sustentabilidade' },
-        { name: 'Teiú Adventure', path: '/teiu-adventure' },
+        { name: t('menu.sustentabilidade', 'Sustentabilidade'), path: '/sustentabilidade' },
+        { name: t('menu.teiuAdventure', 'Teiú Adventure'), path: '/teiu-adventure' },
       ]
     },
-    { name: 'Trabalhe Conosco', path: '/trabalheconosco' },
-    { name: 'Fale Conosco', path: '/contato' },
+    { name: t('menu.trabalheConosco', 'Trabalhe Conosco'), path: '/trabalheconosco' },
+    { name: t('menu.contato'), path: '/contato' },
   ];
 
   const handleNavigate = (path) => {
@@ -93,14 +95,16 @@ function Navbar() {
           ))}
         </ul>
 
-        {/* (Hambúrguer) */}
+        {/* Hambúrguer (Mobile) */}
         <div className="lg:hidden flex items-center">
           <button onClick={() => setIsOpen(!isOpen)} className="text-white focus:outline-none">
             {isOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
         </div>
 
-        <div className="hidden lg:flex justify-end w-[100px]"></div> 
+        <div className="hidden lg:flex justify-end w-[100px]">
+          <LanguageToggle />
+        </div> 
       </div>
 
       {/* Menu Mobile/Tablet Dropdown */}
@@ -143,6 +147,10 @@ function Navbar() {
               </li>
             ))}
           </ul>
+          
+          <div className="p-4 border-t border-white/10 flex justify-center pb-8">
+            <LanguageToggle />
+          </div>
         </div>
       )}
     </nav>

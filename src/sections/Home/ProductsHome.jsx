@@ -8,7 +8,7 @@ import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import {productsMock } from '../../mocks/Products';
-import ProductCard from '../../components/products/ProductCard';
+import ProductCardHome from '../../components/products/ProductCardHome';
 
 function ProductsSession() {
   const navigate = useNavigate();
@@ -86,7 +86,7 @@ function ProductsSession() {
         </div>
 
         <div 
-          className={`relative group px-4 transition-all duration-1000 delay-200 ${
+          className={`relative px-4 transition-all duration-1000 delay-200 ${
             visible && !isLeaving 
               ? "opacity-100 translate-y-0" 
               : "opacity-0 translate-y-10"
@@ -106,14 +106,23 @@ function ProductsSession() {
             }}
             className="pb-16 !static" 
           >
-            {produtosEmDestaque.map((item) => (
-              <SwiperSlide 
+           {produtosEmDestaque.map((item) => {
+              const variantExibida = item.variants?.find(v => v.featured) || item.variants?.[0];
+
+              return (
+                <SwiperSlide 
                   key={item.id} 
-                  className="h-full py-4"
-              >
-                  <ProductCard product={item} /> 
-              </SwiperSlide>
-              ))}
+                  className="h-full py-4 flex justify-center"
+                >
+                  <ProductCardHome
+                    title={item.title}
+                    image={variantExibida?.image} 
+                    parentId={item.id}
+                    variantId={variantExibida?.id}
+                  /> 
+                </SwiperSlide>
+              );
+            })}
           </Swiper>
 
           <button className="btn-prev absolute left-[-20px] top-1/2 -translate-y-1/2 z-30 w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-800 opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-gray-50 cursor-pointer border border-gray-100">

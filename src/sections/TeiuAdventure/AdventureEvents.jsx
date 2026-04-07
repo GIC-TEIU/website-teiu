@@ -29,14 +29,9 @@ const eventos = [
   },
   {
     id: 5,
-    hashtag: '#CORRIDA_RUSTICA_3', 
+    hashtag: '#CORRIDA_RUSTICA_2', 
     img: '/assets/img/corrida.png',
   },
-  {
-    id: 5,
-    hashtag: '#CORRIDA_RUSTICA_4', 
-    img: '/assets/img/corrida.png',
-  }
 ];
 
 function AdventureEvents() {

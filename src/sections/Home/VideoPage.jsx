@@ -1,19 +1,21 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 
 function InstitutionalVideo({ videoUrl, posterUrl }) {
   const videoRef = useRef(null);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
     const options = {
       root: null,
-      threshold: 0.3,
+      rootMargin: "200px", 
+      threshold: 0.1,
     };
 
     const handleIntersection = (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          videoRef.current?.play().catch(() => {
-          });
+          setIsLoaded(true); 
+          videoRef.current?.play().catch(() => {});
         } else {
           videoRef.current?.pause();
         }
@@ -32,16 +34,18 @@ function InstitutionalVideo({ videoUrl, posterUrl }) {
   return (
     <section className="w-full flex justify-center">
       <div className="w-full">
-        <div className="relative aspect-video ">
+        <div className="relative aspect-video bg-gray-900 overflow-hidden">
             <video
-            ref={videoRef}
-            src="/assets/video/Eternità.mp4" 
-            poster={posterUrl}
-            muted
-            loop
-            playsInline
-            disablePictureInPicture
-            className="w-full h-full object-cover"
+              ref={videoRef}
+              src={isLoaded ? "/assets/video/Eternità.mp4" : ""} 
+              poster={posterUrl}
+              muted
+              loop
+              playsInline
+              disablePictureInPicture
+              className={`w-full h-full object-cover transition-opacity duration-700 ${
+                isLoaded ? "opacity-100" : "opacity-0"
+              }`}
             />
           <div className="absolute inset-0 bg-black/5 pointer-events-none" />
         </div>

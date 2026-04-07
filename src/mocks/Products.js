@@ -84,7 +84,7 @@ export const productsMock = [
         label: "Extreme Espuma", 
         color: "#1e1a2d", 
         image: "/assets/img/vatz1.png",
-        featured: true 
+        featured: false
       }
     ]
   },
@@ -140,7 +140,7 @@ export const productsMock = [
         label: "Extreme Espuma", 
         color: "#1e1a2d", 
         image: "/assets/img/vatz1.png",
-        featured: true 
+        featured: false 
       }
     ]
   },

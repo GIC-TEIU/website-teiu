@@ -21,6 +21,15 @@ const resources = {
         "trabalheConosco": "Trabalhe Conosco",
         "contato": "Fale Conosco",
         "siga": "Siga-nos"
+      },
+     "titles": {
+        "produtos": "Nossos Produtos",
+        "verTodos": "Ver todos",
+        "instagram": "Nosso Instagram",
+        "marcas": " Marcas",
+        "categoria": "Categoria",
+        "pesquisar": "Pesquisar",
+        "apagar": "Delete All",
       }
     }
   },
@@ -44,6 +53,15 @@ const resources = {
         "contato": "Contact Us",
         "siganos": "Follow Us",
         "direitos": "All rights reserved."
+      },
+      "titles": {
+        "produtos": "Our Products",
+        "verTodos": "View all",
+        "instagram": "Our Instagram",
+        "marcas": "Brands",
+        "categoria": "Category",
+        "pesquisar": "Search",
+        "apagar": "Limpar Tudo",
       }
     }
   }

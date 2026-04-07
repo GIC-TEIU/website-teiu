@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { useTranslation } from 'react-i18next';
 
 function InstagramSection() {
+  const { t } = useTranslation();
   const [visible, setVisible] = useState(false);
   const [isLeaving, setIsLeaving] = useState(false);
   const sectionRef = useRef(null);
@@ -65,7 +67,7 @@ function InstagramSection() {
             : "opacity-0 translate-y-10"
         }`}>
           <h2 className="text-3xl font-bold text-white font-teiu tracking-tight">
-            Nosso Instagram
+            {t('titles.instagram')}
           </h2>
           <a 
             href="https://www.instagram.com/teiuoficial/"
@@ -73,7 +75,7 @@ function InstagramSection() {
             rel="noopener noreferrer"
             className="flex items-center gap-2 text-sm font-medium border border-white rounded-full px-6 py-2 text-white hover:bg-white hover:text-black transition-all shadow-md font-teiu"
           >
-            Ver Instagram
+            {t('titles.instagram')}
           </a>
         </div>
 

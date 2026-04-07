@@ -1,4 +1,6 @@
 import { X, Check } from "lucide-react";
+import { useTranslation } from 'react-i18next';
+
 
 const brandLogos = {
   Teiú: "/assets/img/teiulogo.png",
@@ -8,6 +10,7 @@ const brandLogos = {
 };
 
 const SidebarFilters = ({ filters, setFilters, options, isOpen, onClose }) => {
+  const { t } = useTranslation();
   const handleSelect = (name, value) => {
     setFilters(prev => ({
       ...prev,
@@ -31,7 +34,7 @@ const SidebarFilters = ({ filters, setFilters, options, isOpen, onClose }) => {
       <div className="space-y-8">
         {/* BUSCA RÁPIDA */}
         <div>
-          <span className="text-[10px] font-bold font-teiu text-gray-400 uppercase tracking-widest mb-3 block">Pesquisar</span>
+          <span className="text-[10px] font-bold font-teiu text-gray-400 uppercase tracking-widest mb-3 block">{t('titles.pesquisar')}</span>
           <input
             type="text"
             placeholder="Nome do produto..."
@@ -44,7 +47,7 @@ const SidebarFilters = ({ filters, setFilters, options, isOpen, onClose }) => {
         {/* MARCAS COM LOGO */}
         <div>
           <span className="text-[10px] font-teiu font-bold text-gray-400 uppercase tracking-widest mb-4 block">
-            Marcas
+            {t('titles.marcas')}
           </span>
           <div className="grid grid-cols-2 gap-2">
             {Object.keys(brandLogos).map((brand) => (
@@ -68,7 +71,7 @@ const SidebarFilters = ({ filters, setFilters, options, isOpen, onClose }) => {
 
         {/* CATEGORIAS */}
         <div>
-          <span className="text-[10px] font-bold font-teiu text-gray-400 uppercase tracking-widest mb-3 block">Categoria</span>
+          <span className="text-[10px] font-bold font-teiu text-gray-400 uppercase tracking-widest mb-3 block"> {t('titles.categoria')} </span>
           <div className="flex flex-col gap-1">
             {options.categories.map((cat) => (
               <button
@@ -104,7 +107,7 @@ const SidebarFilters = ({ filters, setFilters, options, isOpen, onClose }) => {
           onClick={() => setFilters({ search: '', category: '', brand: '', volume: '', fragrance: '' })}
           className="w-full py-3 text-xs font-teiu  font-bold text-gray-400 hover:text-red-500 transition-colors border-t border-dashed mt-4"
         >
-          LIMPAR TUDO
+          {t('titles.apagar')} 
         </button>
       </div>
     </aside>

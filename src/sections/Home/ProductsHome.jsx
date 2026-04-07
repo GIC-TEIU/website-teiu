@@ -9,8 +9,10 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import {productsMock } from '../../mocks/Products';
 import ProductCardHome from '../../components/products/ProductCardHome';
+import { useTranslation } from 'react-i18next';
 
 function ProductsSession() {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [visible, setVisible] = useState(false);
   const [isLeaving, setIsLeaving] = useState(false);
@@ -75,13 +77,13 @@ function ProductsSession() {
           }`}
         >
           <h2 className="text-2xl font-bold text-black tracking-tight font-teiu">
-            Nossos Produtos
+            {t('titles.produtos')}
           </h2>
           <button 
             onClick={() => navigate('/produtos')} 
             className="flex items-center gap-2 text-sm font-medium border border-gray-300 rounded-full px-5 py-2 text-gray-700 hover:bg-white transition-all cursor-pointer shadow-sm font-teiu"
           >
-            Ver todos <ChevronRight size={16} />
+           {t('titles.verTodos')} <ChevronRight size={16} />
           </button>
         </div>
 

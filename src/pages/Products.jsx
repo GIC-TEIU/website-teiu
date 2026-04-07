@@ -6,8 +6,10 @@ import SidebarFilters from "../components/products/SidebarFilters";
 import Pagination from "../components/Pagination"; 
 import { Filter, ChevronUp } from "lucide-react"; 
 import Footer from "../components/Footer";
+import { useTranslation } from 'react-i18next';
 
 function ProductsPage() {
+    const { t } = useTranslation();
     const [isSidebarOpen, setIsSidebarOpen] = useState(false);
     const [filters, setFilters] = useState({
         search: '',
@@ -78,7 +80,7 @@ function ProductsPage() {
                         <div className="flex justify-between items-center mb-6">
                             <div>
                                 <h1 className="text-2xl font-teiu lg:text-3xl font-semibold text-black">
-                                    Nossos Produtos
+                                   {t('titles.produtos')}
                                 </h1>
                                 <p className="text-gray-400 text-xs mt-1">
                                     {filteredProducts.length} itens encontrados

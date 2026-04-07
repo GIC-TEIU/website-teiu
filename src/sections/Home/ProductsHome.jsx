@@ -85,13 +85,9 @@ function ProductsSession() {
           </button>
         </div>
 
-        <div 
-          className={`relative px-4 transition-all duration-1000 delay-200 ${
-            visible && !isLeaving 
-              ? "opacity-100 translate-y-0" 
-              : "opacity-0 translate-y-10"
-          }`}
-        >
+        <div className={`relative group/carousel px-4 transition-all duration-1000 delay-200 ${
+          visible && !isLeaving ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
+          }`}>
           <Swiper
             modules={[Navigation, Pagination]}
             spaceBetween={20}
@@ -119,17 +115,16 @@ function ProductsSession() {
                     image={variantExibida?.image} 
                     parentId={item.id}
                     variantId={variantExibida?.id}
+                    allVariants={item.variants}
                   /> 
                 </SwiperSlide>
               );
             })}
           </Swiper>
-
-          <button className="btn-prev absolute left-[-20px] top-1/2 -translate-y-1/2 z-30 w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-800 opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-gray-50 cursor-pointer border border-gray-100">
+          <button className="btn-prev absolute left-[-20px] top-1/2 -translate-y-1/2 z-30 w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-800 opacity-0 group-hover/carousel:opacity-100 transition-all duration-300 hover:bg-gray-50 cursor-pointer border border-gray-100">
             <ChevronLeft size={24} />
           </button>
-
-          <button className="btn-next absolute right-[-20px] top-1/2 -translate-y-1/2 z-30 w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-800 opacity-0 group-hover:opacity-100 transition-all duration-300 hover:bg-gray-50 cursor-pointer border border-gray-100">
+          <button className="btn-next absolute right-[-20px] top-1/2 -translate-y-1/2 z-30 w-12 h-12 bg-white rounded-full shadow-lg flex items-center justify-center text-gray-800 opacity-0 group-hover/carousel:opacity-100 transition-all duration-300 hover:bg-gray-50 cursor-pointer border border-gray-100">
             <ChevronRight size={24} />
           </button>
         </div>

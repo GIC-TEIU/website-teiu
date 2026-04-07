@@ -1,12 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-function ProductCard({ title, image, parentId, variantId }) {
+function ProductCardHome({ title, image, parentId, variantId }) {
   return (
     <Link 
       to={`/produto/${parentId}`} 
       state={{ variantId }} 
-      className="relative w-full max-w-[280px] aspect-[3/4] rounded-[20px] bg-white shadow-sm 
+      className="relative w-full max-w-[280px] aspect-[2.8/4] rounded-[20px] bg-white shadow-sm 
                  hover:shadow-xl transition-shadow duration-500 flex flex-col items-center p-8 
                  cursor-pointer overflow-hidden border border-gray-100 group block"
     >
@@ -40,4 +40,4 @@ function ProductCard({ title, image, parentId, variantId }) {
   );
 }
 
-export default ProductCard;
+export default ProductCardHome;

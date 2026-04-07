@@ -21,7 +21,7 @@ function Navbar() {
 
   const navItems = [
     { name: t('menu.empresa'), path: '/aempresa' },
-    { name: t('menu.marcas', 'Nossas Marcas'), path: '/marcas' }, // O segundo argumento é o texto padrão se falhar
+    // { name: t('menu.marcas', 'Nossas Marcas'), path: '/marcas' }, 
     { name: t('menu.produtos'), path: '/produtos' },
     { 
       name: t('menu.projetos', 'Nossos Projetos'), 

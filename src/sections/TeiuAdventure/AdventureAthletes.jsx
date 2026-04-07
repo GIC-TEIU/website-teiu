@@ -25,24 +25,24 @@ const atletas = [
   },
   {
     id: 4,
-    nome: 'Ana Silva',
+    nome: 'Rebeca Andrade',
     texto: 'Atleta Teiú Adventure',
-    esporte: 'CICLISTA',
-    img: '/assets/img/multidao-ciclistas.jpg', 
+    esporte: 'Ginasta',
+    img: '/assets/img/Rebeca.png', 
   },
   {
     id: 4,
-    nome: 'Stéfani',
+    nome: 'Rayssa Leal',
     texto: 'Atleta Teiú Adventure',
-    esporte: 'CICLISTA',
-    img: '/assets/img/multidao-ciclistas.jpg',
+    esporte: 'Skatista',
+    img: '/assets/img/Rayssa.png',
   },
   {
     id: 4,
-    nome: 'Andersen',
+    nome: 'Isanelly da Silva',
     texto: 'Atleta Teiú Adventure',
-    esporte: 'CICLISTA',
-    img: '/assets/img/multidao-ciclistas.jpg', 
+    esporte: 'Levantamento de Peso',
+    img: '/assets/img/Isanelly.png', 
   }
   
 ];

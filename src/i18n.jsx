@@ -29,7 +29,7 @@ const resources = {
         "marcas": " Marcas",
         "categoria": "Categoria",
         "pesquisar": "Pesquisar",
-        "apagar": "Delete All",
+        "apagar": "Limpar Tudo",
       }
     }
   },
@@ -61,7 +61,7 @@ const resources = {
         "marcas": "Brands",
         "categoria": "Category",
         "pesquisar": "Search",
-        "apagar": "Limpar Tudo",
+        "apagar": "Delete All",
       }
     }
   }

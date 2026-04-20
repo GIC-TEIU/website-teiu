@@ -79,7 +79,7 @@ function ProductsPage() {
                     <main className="flex-1">
                         <div className="flex justify-between items-center mb-6">
                             <div>
-                                <h1 className="text-2xl font-teiu lg:text-3xl font-semibold text-black">
+                                <h1 className="text-2xl font-teiu lg:text-3xl font-semibold text-teiu-primary-dark">
                                    {t('titles.produtos')}
                                 </h1>
                                 <p className="text-gray-400 text-xs mt-1">

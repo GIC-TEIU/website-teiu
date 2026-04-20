@@ -77,7 +77,7 @@ function AdventureEvents() {
                   />
                 </div>
                 <div className="flex justify-center items-center mt-auto">
-                  <span className="text-black font-black text-sm lg:text-base tracking-widest">
+                  <span className="text-teiu-primary-dark font-black text-sm lg:text-base tracking-widest">
                     {evento.hashtag}
                   </span>
                 </div>

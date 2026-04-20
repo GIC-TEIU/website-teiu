@@ -14,7 +14,7 @@ function Footer() {
             <img 
               src="/assets/img/Logomarca.png" 
               alt="Logo Teiú" 
-              className="h-20 md:h-24 w-auto object-contain" 
+              className="h-30 md:h-34 w-auto object-contain" 
             />
           </div>
 

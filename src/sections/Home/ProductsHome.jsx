@@ -66,9 +66,9 @@ function ProductsSession() {
   return (
     <section 
       ref={sectionRef}
-      className="relative -mt-24 z-30 bg-teiu-gray pt-10 pb-12 px-16 rounded-t-[50px] shadow-[0_-20px_50px_rgba(0,0,0,0.2)] overflow-hidden"
+      className="relative -mt-24 z-30 bg-teiu-gray pt-10 pb-12 px-0 rounded-t-[50px] shadow-[0_-20px_50px_rgba(0,0,0,0.2)] overflow-hidden"
     >
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-full mx-auto">
         <div 
           className={`flex justify-between items-center mb-10 px-4 transition-all duration-1000 ${
             visible && !isLeaving 
@@ -76,7 +76,7 @@ function ProductsSession() {
               : "opacity-0 translate-y-10"
           }`}
         >
-          <h2 className="text-2xl font-bold text-black tracking-tight font-teiu">
+          <h2 className="text-2xl font-bold tracking-tight text-teiu-primary-dark font-teiu">
             {t('titles.produtos')}
           </h2>
           <button 
@@ -90,19 +90,19 @@ function ProductsSession() {
         <div className={`relative group/carousel px-4 transition-all duration-1000 delay-200 ${
           visible && !isLeaving ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
           }`}>
-          <Swiper
+         <Swiper
             modules={[Navigation, Pagination]}
             spaceBetween={20}
-            slidesPerView={1}
+            slidesPerView={1.2} 
             navigation={{
               nextEl: '.btn-next',
               prevEl: '.btn-prev',
             }}
             breakpoints={{
-              640: { slidesPerView: 2 },
-              1024: { slidesPerView: 4 },
+              640: { slidesPerView: 5.2 },   // 👈 mostra 2 + pedaço do próximo
+              1024: { slidesPerView: 5.2 },  // 👈 mostra 4 + pedaço do próximo
             }}
-            className="pb-16 !static" 
+            className="pb-16 !static"
           >
            {produtosEmDestaque.map((item) => {
               const variantExibida = item.variants?.find(v => v.featured) || item.variants?.[0];

@@ -68,7 +68,7 @@ function OurFacilities() {
               : "opacity-0 -translate-x-20"
           }`}
         >
-          <h2 className="text-2xl sm:text-3xl font-bold text-black mb-4 leading-tight">
+          <h2 className="text-2xl sm:text-3xl font-bold text-teiu-primary-dark mb-4 leading-tight">
             Lorem ipsum dolor sit amet, consectetur
           </h2>
 

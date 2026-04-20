@@ -73,7 +73,7 @@ function InstagramSection() {
             href="https://www.instagram.com/teiuoficial/"
             target="_blank" 
             rel="noopener noreferrer"
-            className="flex items-center gap-2 text-sm font-medium border border-white rounded-full px-6 py-2 text-white hover:bg-white hover:text-black transition-all shadow-md font-teiu"
+            className="flex items-center gap-2 text-sm font-medium border border-white rounded-full px-6 py-2 text-white hover:bg-white hover:text-teiu-primary-dark transition-all shadow-md font-teiu"
           >
             {t('titles.instagram')}
           </a>

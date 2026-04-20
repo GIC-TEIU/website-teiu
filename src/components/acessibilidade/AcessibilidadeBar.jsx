@@ -32,13 +32,13 @@ function AcessibilidadeBar() {
       <div className="absolute top-0 left-0">
         <a 
           href="#conteudo" 
-          className="sr-only focus:not-sr-only focus:absolute focus:p-2 focus:bg-white focus:text-black focus:z-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="sr-only focus:not-sr-only focus:absolute focus:p-2 focus:bg-white focus:text-teiu-primary-dark focus:z-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           Ir para o conteúdo (Alt + 1)
         </a>
         <a
           href="#menu"
-          className="sr-only focus:not-sr-only focus:absolute focus:p-2 focus:bg-white focus:text-black focus:z-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="sr-only focus:not-sr-only focus:absolute focus:p-2 focus:bg-white focus:text-teiu-primary-dark focus:z-50 focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           Ir para o menu (Alt + 2)
         </a>

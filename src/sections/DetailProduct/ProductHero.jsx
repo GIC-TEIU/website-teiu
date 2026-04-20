@@ -8,7 +8,7 @@ function ProductHero({ product, activeVariantId, setActiveVariantId }) {
   const opacityText = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
 
   return (
-    <section className="relative min-h-screen bg-white text-black pt-32 pb-15 px-6 lg:px-16">
+    <section className="relative min-h-screen bg-white text-teiu-primary-dark pt-32 pb-15 px-6 lg:px-16">
       
       {/* Faixas Laterais */}
       <div className="absolute top-0 right-0 h-full w-26 flex z-20 drop-shadow-xl">

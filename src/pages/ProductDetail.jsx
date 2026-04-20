@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react"; 
 import {
   motion,
   useMotionValue,
@@ -10,15 +10,6 @@ import { ChevronRight } from "lucide-react";
 import { productsMock } from "../mocks/Products";
 import Navbar from "../components/Navbar";
 
-function lerp(a, b, t) {
-  return a + (b - a) * Math.max(0, Math.min(1, t));
-}
-function invlerp(a, b, v) {
-  return (v - a) / (b - a);
-}
-function remap(inMin, inMax, outMin, outMax, v) {
-  return lerp(outMin, outMax, invlerp(inMin, inMax, v));
-}
 function clamp01(t) {
   return Math.max(0, Math.min(1, t));
 }
@@ -32,184 +23,261 @@ export default function ProductDetail() {
     location.state?.variantId || produto?.variants[0]?.id
   );
 
-  const progressMV = useMotionValue(0); 
-  const progressRef = useRef(0);         
+  const progressMV = useMotionValue(0);
+  const progressRef = useRef(0);
 
+  const [isAnimationDone, setIsAnimationDone] = useState(false);
+  const [isReversing, setIsReversing] = useState(false);
+  
   useEffect(() => {
-    document.body.style.overflow = "hidden";
+    window.scrollTo({
+      top: 0,
+      behavior: "auto", // ou "instant"
+    });
+  }, [id]);
+  // trava scroll só durante animação
+  useEffect(() => {
+    if (!isAnimationDone || isReversing) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "auto";
+    }
+
     return () => {
       document.body.style.overflow = "";
     };
-  }, []);
+  }, [isAnimationDone, isReversing]);
 
+  // reset ao trocar produto
   useEffect(() => {
     progressRef.current = 0;
     progressMV.set(0);
+    setIsAnimationDone(false);
+    setIsReversing(false);
   }, [id]);
 
-  // Wheel → avança/recua o progresso suavemente
+  // 🔥 detectar quando usuário voltou pro topo
   useEffect(() => {
-    const SPEED = 0.0012; // quão rápido 1 "clique" de scroll move o progresso
-
-    const onWheel = (e) => {
-      e.preventDefault();
-      const next = clamp01(progressRef.current + e.deltaY * SPEED);
-      progressRef.current = next;
-      animate(progressMV, next, { duration: 0.6, ease: [0.25, 0.1, 0.25, 1] });
+    const onScroll = () => {
+      if (window.scrollY === 0 && isAnimationDone) {
+        setIsReversing(true);
+        setIsAnimationDone(false);
+      }
     };
 
-    // Touch
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [isAnimationDone]);
+
+  useEffect(() => {
+    const SPEED = 0.0012;
+
+    const onWheel = (e) => {
+      // 🔥 BLOQUEIA SCROLL quando está animando (ida ou volta)
+      if (!isAnimationDone || isReversing) {
+        e.preventDefault();
+
+        const direction = e.deltaY > 0 ? 1 : -1;
+
+        let next = progressRef.current + direction * Math.abs(e.deltaY) * SPEED;
+
+        next = clamp01(next);
+
+        progressRef.current = next;
+
+        animate(progressMV, next, {
+          duration: 0.5,
+          ease: [0.25, 0.1, 0.25, 1],
+        });
+
+        // terminou descendo
+        if (next >= 0.99 && !isReversing) {
+          setIsAnimationDone(true);
+        }
+
+        // terminou voltando
+        if (next <= 0.01 && isReversing) {
+          setIsReversing(false);
+        }
+      }
+    };
+
     let touchY = 0;
+
     const onTouchStart = (e) => {
       touchY = e.touches[0].clientY;
     };
+
     const onTouchMove = (e) => {
-      e.preventDefault();
-      const delta = touchY - e.touches[0].clientY;
-      touchY = e.touches[0].clientY;
-      const next = clamp01(progressRef.current + delta * SPEED * 2);
-      progressRef.current = next;
-      animate(progressMV, next, { duration: 0.3, ease: "easeOut" });
+      if (!isAnimationDone || isReversing) {
+        e.preventDefault();
+
+        const delta = touchY - e.touches[0].clientY;
+        touchY = e.touches[0].clientY;
+
+        let next = progressRef.current + delta * SPEED * 2;
+
+        next = clamp01(next);
+
+        progressRef.current = next;
+
+        animate(progressMV, next, {
+          duration: 0.3,
+          ease: "easeOut",
+        });
+
+        if (next >= 0.99 && !isReversing) {
+          setIsAnimationDone(true);
+        }
+
+        if (next <= 0.01 && isReversing) {
+          setIsReversing(false);
+        }
+      }
     };
 
     window.addEventListener("wheel", onWheel, { passive: false });
     window.addEventListener("touchstart", onTouchStart, { passive: true });
     window.addEventListener("touchmove", onTouchMove, { passive: false });
+
     return () => {
       window.removeEventListener("wheel", onWheel);
       window.removeEventListener("touchstart", onTouchStart);
       window.removeEventListener("touchmove", onTouchMove);
     };
-  }, [progressMV]);
+  }, [isAnimationDone, isReversing, progressMV]);
 
+  // animações
   const scaleImg = useTransform(
     progressMV,
-    [0, 0.20, 0.42, 1],
-    [1.25, 1, 0.9, 1.2]
+    [0, 0.2, 0.42, 1],
+    [1.25, 1, 0.5, 0.7]
   );
 
-  // imagem desliza para direita
-  const xImg = useTransform(
+  const xImg = useTransform(progressMV, [0.28, 0.2], ["20vw", "-25vw"]);
+  const yImg = useTransform(
     progressMV,
-    [0.28, 0.2],
-    ["20vw", "-25vw"]
+    [0, 0.3, 1],
+    [150, 80, 80] // ajusta aqui
   );
-
-  // Texto do Hero desaparece na fase 1
   const opacityHeroText = useTransform(progressMV, [0, 0.28], [1, 0]);
   const yHeroText = useTransform(progressMV, [0, 0.28], [0, -20]);
 
-  // Modo de uso aparece durante a fase 2
-  const opacityUsage = useTransform(progressMV, [0.38, 0.60, 0.9, 0.92], [0, 1, 1, 0]);
-  
-  const opacitySpecs = useTransform(progressMV, [0.85, 0.95], [0, 1]);
-  const xSpecs = useTransform(progressMV, [0.85, 0.95], [-50, 0]);
+  const opacityUsage = useTransform(
+    progressMV,
+    [0.38, 0.6, 0.9, 0.92],
+    [0, 1, 1, 1]
+  );
 
-  // Indicador de scroll some quando o usuário já scrollou
   const opacityScrollHint = useTransform(progressMV, [0, 0.08], [1, 0]);
 
-  if (!produto)
-    return (
-      <div className="min-h-screen flex items-center justify-center font-teiu text-2xl">
-        Produto não encontrado.
-      </div>
-    );
+  if (!produto) return <div>Produto não encontrado</div>;
 
   const activeVariant =
     produto.variants.find((v) => v.id === activeVariantId) ||
     produto.variants[0];
 
   return (
-    <div className="relative w-full h-screen overflow-hidden bg-white">
-      <Navbar />
+    <>
+      {/* HERO */}
+      <div className="relative w-screen h-screen  overflow-hidden bg-white">
+        <Navbar />
+        <div className="absolute top-0 right-0 h-full w-34 flex z-30 drop-shadow-xl">
+          {produto.variants?.map((variant) => (
+            <button
+              key={variant.id}
+              onClick={() => setActiveVariantId(variant.id)}
+              className={`h-full flex-1 relative group transition-all duration-500 cursor-pointer
+                shadow-[inset_0_0_25px_rgba(0,0,0,0.25)]
+                ${activeVariantId === variant.id ? "flex-[2]" : "hover:flex-[1.5]"}`}
+            >
+              <div
+                  className={`h-full w-full transition-opacity
+                    ${activeVariantId === variant.id
+                      ? "opacity-100"
+                      : "opacity-75 group-hover:opacity-100"}`}
+                  style={{ backgroundColor: variant.color }}
+                />
+              <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+                <motion.div
+                  animate={{
+                    opacity: activeVariantId === variant.id ? 1 : 0,
+                    x: activeVariantId === variant.id ? 0 : 10,
+                  }}
+                  className="mb-3"
+                >
+                  <ChevronRight className="text-white w-6 h-6 animate-bounce" />
+                </motion.div>
+                <span className="whitespace-nowrap [writing-mode:vertical-lr] rotate-180 text-white font-semibold uppercase tracking-wider text-sm">
+                  {variant.label}
+                </span>
+              </div>
+            </button>
+          ))}
+        </div>
 
-      {/*faixas de variação */}
-      <div className="absolute top-0 right-0 h-full w-34 flex z-30 drop-shadow-xl">
-        {produto.variants?.map((variant) => (
-          <button
-            key={variant.id}
-            onClick={() => setActiveVariantId(variant.id)}
-            className={`h-full flex-1 relative group transition-all duration-500 cursor-pointer
-              shadow-[inset_0_0_25px_rgba(0,0,0,0.25)]
-              ${activeVariantId === variant.id ? "flex-[2]" : "hover:flex-[1.5]"}`}
-          >
-            <div
-                className={`h-full w-full transition-opacity
-                  ${activeVariantId === variant.id
-                    ? "opacity-100"
-                    : "opacity-75 group-hover:opacity-100"}`}
-                style={{ backgroundColor: variant.color }}
-              />
-            <div className="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-              <motion.div
-                animate={{
-                  opacity: activeVariantId === variant.id ? 1 : 0,
-                  x: activeVariantId === variant.id ? 0 : 10,
-                }}
-                className="mb-3"
-              >
-                <ChevronRight className="text-white w-6 h-6 animate-bounce" />
-              </motion.div>
-              <span className="whitespace-nowrap [writing-mode:vertical-lr] rotate-180 text-white font-semibold uppercase tracking-wider text-sm">
-                {variant.label}
-              </span>
-            </div>
-          </button>
-        ))}
-      </div>
+        {/* imagem */}
+        <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
+          <motion.img
+            src={activeVariant.image}
+              style={{ scale: scaleImg, x: xImg, y: yImg}}
+            className="h-[804px]"
+          />
+        </div>
 
-      {/* tetxo principal do herop */}
-      <motion.div
-        className="absolute right-10 lg:right-32 top-1/2 -translate-y-1/2
+        {/* texto */}
+        <motion.div
+          className="absolute right-10 lg:right-32 top-1/2 -translate-y-1/2
+                    w-5/12 font-teiu text-teiu-deep-blue z-10 pt-20 pr-4"
+          style={{ opacity: opacityHeroText, y: yHeroText }}
+        >
+          <span className="font-medium text-md mb-4 block uppercase tracking-tighter">
+            {produto.category}
+          </span>
+          <h1 className="text-6xl md:text-8xl font-extrabold mb-4 leading-none">
+            {produto.title}
+          </h1>
+          <p className="text-5xl font-bold leading-tight">{produto.tagline}</p>
+        </motion.div>
+
+        {/* descrição */}
+        <motion.div
+        className="absolute left-50 lg:left-50 top-1/2 -translate-y-1/2
                    w-5/12 font-teiu text-teiu-deep-blue z-10 pt-20 pr-4"
-        style={{ opacity: opacityHeroText, y: yHeroText }}
+        style={{ opacity: opacityUsage }}
       >
-        <span className="font-medium text-md mb-4 block uppercase tracking-tighter">
-          {produto.category}
-        </span>
-        <h1 className="text-6xl md:text-8xl font-extrabold mb-4 leading-none">
-          {produto.title}
-        </h1>
-        <p className="text-5xl font-bold leading-tight">{produto.tagline}</p>
+        <h2 className="text-4xl md:text-5xl font-extrabold mb-6 leading-tight">
+          Descrição
+        </h2>
+        <p className="text-xl leading-relaxed opacity-75">{produto.usage}</p>
       </motion.div>
 
-      {/* ── modo de uso */}
-      <motion.div
-        className="absolute left-10 lg:left-20 top-1/2 -translate-y-1/2
-                   w-5/12 font-teiu text-teiu-deep-blue z-10 pt-20 pr-4"
+        {/* scroll hint */}
+           <motion.div
+        className="absolute bottom-2 left-1/2 -translate-x-1/2 flex flex-col
+                   items-center gap-2 font-teiu text-teiu-deep-blue text-xs
+                   tracking-widest uppercase z-30"
+        style={{ opacity: opacityScrollHint }}
+      >
+        <span>Scroll</span>
+        <motion.div
+          animate={{ y: [0, 6, 0] }}
+          transition={{ repeat: Infinity, duration: 1.4 }}
+          className="w-px h-8 bg-current opacity-50"
+        />
+      </motion.div>
+      </div>
+      <div
+        className="w-screen p-50 font-teiu text-teiu-deep-blue z-10 pt-20 pr-4 max-w-[50%]"
         style={{ opacity: opacityUsage }}
       >
         <h2 className="text-4xl md:text-5xl font-extrabold mb-6 leading-tight">
           Modo de uso
         </h2>
         <p className="text-xl leading-relaxed opacity-75">{produto.usage}</p>
-      </motion.div>
-
-      {/* ── imagem produto */}
-      <div className="absolute inset-0 flex items-center justify-center
-                      pointer-events-none z-20">
-        <motion.img
-          key={activeVariantId}
-          src={activeVariant.image}
-          alt={activeVariant.label}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.4 }}
-          style={{
-            scale: scaleImg,
-            x: xImg,
-            y: 80,
-            filter: "drop-shadow(0 24px 48px rgba(0,0,0,0.18))",
-          }}
-          className="h-[520px] w-auto object-contain will-change-transform"
-        />
       </div>
-
-      {/* ── especificações*/}
-      <motion.div
-        className="absolute left-10 lg:left-32 top-1/2 -translate-y-1/2
-                  w-5/12 font-teiu z-20 flex flex-col gap-8"
-        style={{ opacity: opacitySpecs, x: xSpecs }}
+      <div
+        className="w-screen p-50 flex flex-col gap-10"
       >
         {produto.specs.map((item, i) => (
           <div key={i} className="flex flex-row items-start gap-5">
@@ -227,22 +295,7 @@ export default function ProductDetail() {
             </div>
           </div>
         ))}
-      </motion.div>
-
-      {/* ── scroll */}
-      <motion.div
-        className="absolute bottom-2 left-1/2 -translate-x-1/2 flex flex-col
-                   items-center gap-2 font-teiu text-teiu-deep-blue text-xs
-                   tracking-widest uppercase z-30"
-        style={{ opacity: opacityScrollHint }}
-      >
-        <span>Scroll</span>
-        <motion.div
-          animate={{ y: [0, 6, 0] }}
-          transition={{ repeat: Infinity, duration: 1.4 }}
-          className="w-px h-8 bg-current opacity-50"
-        />
-      </motion.div>
-    </div>
+      </div>
+    </>
   );
 }

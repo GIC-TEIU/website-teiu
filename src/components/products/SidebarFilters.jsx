@@ -59,11 +59,8 @@ const SidebarFilters = ({ filters, setFilters, options, isOpen, onClose }) => {
                     : "border-gray-50 bg-gray-50 hover:bg-white hover:border-gray-200"
                   }`}
               >
-                <img
-                  src={brandLogos[brand]}
-                  alt={brand}
-                  className="h-full w-full object-contain transition-transform duration-300"
-                />
+               <span>{brand}</span>
+                
               </button>
             ))}
           </div>

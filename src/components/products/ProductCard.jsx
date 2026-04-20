@@ -7,7 +7,11 @@ const ProductCard = ({ product }) => {
     if (!displayVariant) return null;
 
     return (
-        <div className="group relative bg-[#E7EBEF] bg-card-teiu-watermark rounded-[35px] pt-8 pb-12 px-6 flex flex-col items-center justify-between 
+        <Link
+        to={`/produto/${product.id}`}
+                state={{ variantId: displayVariant.id }}
+                >
+                <div className="group relative bg-[#E7EBEF] bg-card-teiu-watermark rounded-[35px] pt-8 pb-12 px-6 flex flex-col items-center justify-between 
                 shadow-[0_20px_50px_rgba(0,0,0,0.2)] hover:shadow-[0_30px_60px_rgba(0,0,0,0.25)] 
                 max-w-[310px] w-full mx-auto mt-6 mb-8 transition-all duration-300 ease-in-out">
 
@@ -16,9 +20,9 @@ const ProductCard = ({ product }) => {
                     src={displayVariant.image}
                     alt={product.title}
                     className="h-full w-auto object-contain 
-                               transition-transform duration-500 ease-in-out 
-                               group-hover:scale-110
-                               filter drop-shadow-[8px_15px_15px_rgba(0,0,0,0.2)]"
+                    transition-transform duration-500 ease-in-out 
+                    group-hover:scale-110
+                    filter drop-shadow-[8px_15px_15px_rgba(0,0,0,0.2)]"
                 />
             </div>
 
@@ -27,14 +31,14 @@ const ProductCard = ({ product }) => {
                 {product.volume}
                 </span>
 
-                <Link 
-                to={`/produto/${product.id}`}
-                state={{ variantId: displayVariant.id }}
+                <div
+                
                 className="absolute -bottom-4 left-6 bg-[#009FE3] hover:bg-[#0096ce] text-white font-bold py-2 px-6 rounded-full text-sm shadow-lg transition-transform hover:scale-105 whitespace-nowrap"
                 >
                 Saiba mais
-            </Link>
+            </div>
         </div>
+    </Link>
     );
 };
 

@@ -167,4 +167,73 @@ export const productsMock = [
       }
     ]
   },
+  {
+    id: 21,
+    title: "Vatz Desengordurante",
+    volume: "500ml",
+    tagline: "A força da limpeza extrema para superfícies",
+    category: "Multiuso",
+    brand: "teiu",
+    usage: "Aplique sobre a superfície a ser limpa e remova com um pano úmido. Não necessita enxágue.",
+    specs: [
+      { value: 1, label: "Volume" },
+      { value: 1, label: "Espuma Ativa" },
+      { value: 0, label: "Edição Especial" }
+    ],
+    variants: [
+      { 
+        id: 206, 
+        label: "Vatz Limpa Vidros", 
+        color: "#1e1a2d", 
+        image: "/assets/img/Vatz Desengordurtante Gatilho (2).png",
+        featured: true 
+      }
+    ]
+  },
+  {
+    id: 22,
+    title: "Vatz Limpa Vidros",
+    volume: "500ml",
+    tagline: "A força da limpeza extrema para superfícies",
+    category: "Multiuso",
+    brand: "teiu",
+    usage: "Aplique sobre a superfície a ser limpa e remova com um pano úmido. Não necessita enxágue.",
+    specs: [
+      { value: 1, label: "Volume" },
+      { value: 1, label: "Espuma Ativa" },
+      { value: 0, label: "Edição Especial" }
+    ],
+    variants: [
+      { 
+        id: 206, 
+        label: "Gel Pinho", 
+        color: "#1e1a2d", 
+        image: "/assets/img/Vatz Limpa Vidros Gatilho (2).png",
+        featured: true 
+      }
+    ]
+  },
+  {
+    id: 23,
+    title: "Vatz Limpador Extreme",
+    volume: "500ml",
+    tagline: "A força da limpeza extrema para superfícies",
+    category: "Multiuso",
+    brand: "teiu",
+    usage: "Aplique sobre a superfície a ser limpa e remova com um pano úmido. Não necessita enxágue.",
+    specs: [
+      { value: 1, label: "Volume" },
+      { value: 1, label: "Espuma Ativa" },
+      { value: 0, label: "Edição Especial" }
+    ],
+    variants: [
+      { 
+        id: 206, 
+        label: "Gel Pinho", 
+        color: "#1e1a2d", 
+        image: "/assets/img/Vatz Limpador Extreme Gatilho (5).png",
+        featured: true 
+      }
+    ]
+  },
 ];

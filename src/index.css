@@ -64,6 +64,10 @@
 #root {
   overflow: hidden;
 }
+.elfsight-app-4e350cdb-802b-4f5d-823c-2a7dbc8acaa4 h2,
+.elfsight-app-4e350cdb-802b-4f5d-823c-2a7dbc8acaa4 .eapps-instagram-feed-title {
+  color: #ffff;
+}
 
 .bg-card-teiu-watermark {
   position: relative;

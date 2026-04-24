@@ -1,3 +1,4 @@
+import { ExternalLink } from 'lucide-react';
 import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 
@@ -67,16 +68,19 @@ function InstagramSection() {
             : "opacity-0 translate-y-10"
         }`}>
           <h2 className="text-3xl font-bold text-white font-teiu tracking-tight">
-            {t('titles.instagram')}
-          </h2>
-          <a 
-            href="https://www.instagram.com/teiuoficial/"
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="flex items-center gap-2 text-sm font-medium border border-white rounded-full px-6 py-2 text-white hover:bg-white hover:text-teiu-primary-dark transition-all shadow-md font-teiu"
-          >
-            {t('titles.instagram')}
-          </a>
+                <a
+                    href="https://www.instagram.com/teiuoficial/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 hover:text-[#009FE3] transition-colors group w-fit"
+                >
+                    <span className="underline decoration-2 underline-offset-4 group-hover:decoration-[#009FE3]">
+                    {t('titles.instagram')}
+                    </span>
+                    <ExternalLink className="w-5 h-5 opacity-70 group-hover:opacity-100 transition-opacity" />
+                </a>
+            </h2>
+         
         </div>
 
         <div className={`rounded-[30px] overflow-hidden shadow-2xl bg-white/5 backdrop-blur-md p-4 border border-white/10 transition-all duration-1000 delay-200 ${

@@ -1,13 +1,16 @@
 import { useState, useEffect, useRef } from "react";
 
-function OurFacilities() {
+function OurFacilities({data}) {
+  const [facilities, setFacilities] = useState('');
   const [open, setOpen] = useState(false);
   const [visible, setVisible] = useState(false);
   const [isLeaving, setIsLeaving] = useState(false);
 
   const sectionRef = useRef(null);
+  useEffect(()=> {
+    setFacilities(data?.components?.our_dependencies.texts)
+  },[data])
 
-  // 🔥 ENTRADA
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -25,7 +28,6 @@ function OurFacilities() {
     return () => observer.disconnect();
   }, []);
 
-  // 🔥 SAÍDA (efeito contrário)
   useEffect(() => {
     const handleScroll = () => {
       if (!sectionRef.current) return;
@@ -35,7 +37,6 @@ function OurFacilities() {
 
       const exitStart = windowHeight * 0.75;
 
-      // quando começa a sair pela parte de baixo
       if (rect.top > exitStart) {
         setIsLeaving(true);
       } else {
@@ -68,13 +69,14 @@ function OurFacilities() {
               : "opacity-0 -translate-x-20"
           }`}
         >
-          <h2 className="text-2xl sm:text-3xl font-bold text-teiu-primary-dark mb-4 leading-tight">
-            Lorem ipsum dolor sit amet, consectetur
-          </h2>
+         <h2
+            className="text-2xl sm:text-3xl font-bold text-teiu-primary-dark mb-4 leading-tight"
+            dangerouslySetInnerHTML={{ __html: facilities?.title?.content }}
+          />
 
-          <p className="text-sm sm:text-base text-gray-600 leading-relaxed">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          </p>
+          <p className="text-sm sm:text-base text-gray-600 leading-relaxed"
+          dangerouslySetInnerHTML={{ __html: facilities?.subtitle?.content }}
+          />
         </div>
 
         {/* IMAGEM */}
@@ -133,7 +135,7 @@ function OurFacilities() {
           >
             <iframe
               className="w-full h-full"
-              src="https://www.youtube.com/embed/fqBCd5sztdU?autoplay=1"
+              src={facilities?.link?.content}
               title="YouTube video"
               frameBorder="0"
               allow="autoplay; encrypted-media"

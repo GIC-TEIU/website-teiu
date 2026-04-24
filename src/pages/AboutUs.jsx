@@ -1,3 +1,5 @@
+import { useEffect, useState } from "react";
+
 import Navbar from "../components/Navbar.jsx";
 import BannerMaster from "../sections/AboutUs/BannerMaster.jsx";
 import FounderSection from "../sections/AboutUs/FounderSection.jsx";
@@ -8,6 +10,25 @@ import SocialProof from "../sections/AboutUs/SocialProof.jsx";
 import Footer from "../components/Footer.jsx";
 
 function AboutUs() {
+  const [pageData, setPageData] = useState(' ');
+    
+      useEffect(() => {
+        const fetchPage = async () => {
+          try {
+            const response = await fetch("http://127.0.0.1:8000/api/pageWebsite/empresa");
+            const data = await response.json();
+            console.log(data)
+            setPageData(data);
+          } catch (error) {
+            console.error("Erro ao buscar página:", error);
+          }
+        };
+    
+        fetchPage();
+      }, []);
+      useEffect(()=> {
+        console.log('aaaaaaaaaaaaaaaaaa',pageData?.components?.banner?.assets?.banner_home?.url)
+      },[pageData])
     return ( 
     <>
         <Navbar/>
@@ -15,9 +36,9 @@ function AboutUs() {
         title={'Lorem Impsum Dolor'}
         text={' Lorem ipsum dolor sit, amet consectetur adipisicing elit.  At repellendus beatae distinctio suscipit esse, eveniet, animi laboriosam dolorum, sit repudiandae obcaecati accusamus rerum soluta nam perspiciatis quas voluptatem. Tempora, veniam!'}
         />
-        <OurFacilities/>
-        <OurHistory/>
-        <FounderSection/>
+        <OurFacilities data={pageData}/>
+        <OurHistory data={pageData}/>
+        <FounderSection data={pageData}/>
         <div className="bg-gradient-to-br from-[#02D1FF] to-[#074B9A] pt-20 rounded-t-4xl">
            <SocialProof/>
            <OurMission/>

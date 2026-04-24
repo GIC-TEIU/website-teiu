@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 
-function OurHistory() {
+function OurHistory({ data }) {
   const [showAll, setShowAll] = useState(false);
   const [visibleIndexes, setVisibleIndexes] = useState([]);
   const [leavingIndexes, setLeavingIndexes] = useState([]);
@@ -12,26 +12,34 @@ function OurHistory() {
   const containerRef = useRef(null);
   const ticking = useRef(false);
 
-  const timeline = [
-    {
-      year: "1995",
-      text: "Lorem ipsum dolor sit amet...",
-      image: "/assets/img/saboaria-conquista-1995.png",
-    },
-    {
-      year: "1998",
-      text: "Lorem ipsum dolor sit amet...",
-      image: "/assets/img/saboaria-1995.png",
-    },
-    {
-      year: "2000",
-      text: "Lorem ipsum dolor sit amet...",
-      image: "/assets/img/saboaria-conquista-1995.png",
-    },
-  ];
+    const buildTimeline = () => {
+    const timelineData = data?.components?.timeline;
+
+    if (!timelineData) return [];
+
+    const texts = timelineData.texts || {};
+    const assets = timelineData.assets || {};
+
+    const events = Object.keys(texts)
+      .filter((key) => key.startsWith("event_") && key.includes("_title"))
+      .map((key) => {
+        const number = key.split("_")[1]; 
+
+        return {
+          year: `Evento ${number}`,
+          text: texts[key]?.content || "",
+          image: assets[`asset_${number}`]?.url
+            ? `http://127.0.0.1:8080/storage/${assets[`asset_${number}`].url}`
+            : "/assets/img/placeholder.png",
+        };
+      });
+
+    return events;
+  };
+
+  const timeline = buildTimeline();
 
   const visibleItems = showAll ? timeline : timeline.slice(0, 2);
-
 
   useEffect(() => {
     itemRefs.current = [];
@@ -58,7 +66,6 @@ function OurHistory() {
     return () => observer.disconnect();
   }, [visibleItems]);
 
-  
   useEffect(() => {
     const handleScroll = () => {
       if (ticking.current) return;
@@ -108,16 +115,10 @@ function OurHistory() {
     };
 
     window.addEventListener("scroll", handleScroll);
+    handleScroll();
 
-
-    const timeout = handleScroll();
-
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-      clearTimeout(timeout);
-    };
+    return () => window.removeEventListener("scroll", handleScroll);
   }, [showAll]);
-
 
   const handleToggle = () => {
     setIsToggling(true);
@@ -130,9 +131,14 @@ function OurHistory() {
 
   return (
     <div className="w-full bg-[#F5F5F5] py-10 px-4 sm:px-8 lg:px-[150px]">
-      <h2 className="text-2xl font-bold mb-10 sm:mb-12 ml-0 sm:ml-10">
-        Nossa História
-      </h2>
+      <h2
+        className="text-2xl font-bold mb-10 sm:mb-12 ml-0 sm:ml-10"
+        dangerouslySetInnerHTML={{
+          __html:
+            data?.components?.timeline?.texts?.title?.content ||
+            "Nossa História",
+        }}
+      />
 
       <div ref={containerRef} className="relative max-w-5xl mx-auto">
         {/* LINHA */}
@@ -153,7 +159,7 @@ function OurHistory() {
 
           return (
             <div
-              key={item.year} 
+              key={index}
               ref={(el) => (itemRefs.current[index] = el)}
               data-index={index}
               className={`relative w-full flex flex-col sm:flex-row items-start pt-6 mb-16 ${
@@ -180,7 +186,7 @@ function OurHistory() {
               >
                 <img
                   src={item.image}
-                  alt={`image${item.year}`}
+                  alt={`event-${index}`}
                   className="w-full rounded-lg shadow-md"
                 />
               </div>
@@ -196,9 +202,11 @@ function OurHistory() {
                 <h3 className="font-bold mb-2 text-[#383838] text-lg">
                   {item.year}
                 </h3>
-                <p className="text-sm sm:text-base text-gray-700">
-                  {item.text}
-                </p>
+
+                <div
+                  className="text-sm sm:text-base text-gray-700"
+                  dangerouslySetInnerHTML={{ __html: item.text }}
+                />
               </div>
 
               {/* BOLINHA */}

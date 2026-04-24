@@ -3,19 +3,21 @@ import { useState, useEffect, useRef } from "react";
 const tabs = {
   mission: {
     title: "Nossa Missão",
+    image: "/assets/img/mission.png",
     items: [
       {
         icon: "/assets/img/sustentabilidade.svg",
-        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.",
+        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       },
       {
         icon: "/assets/img/medal.svg",
-        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.",
+        text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       },
     ],
   },
   vision: {
     title: "Nossa Visão",
+    image: "/assets/img/ourValues.png",
     items: [
       { icon: "👁️", text: "Ser referência no mercado com inovação e excelência." },
       { icon: "🚀", text: "Crescer continuamente e impactar positivamente." },
@@ -23,6 +25,7 @@ const tabs = {
   },
   values: {
     title: "Nossos Valores",
+    image: "/assets/img/ourVision.png",
     items: [
       { icon: "🤝", text: "Ética, transparência e compromisso." },
       { icon: "💡", text: "Inovação e foco no cliente." },
@@ -32,12 +35,16 @@ const tabs = {
 
 function OurMission() {
   const [activeTab, setActiveTab] = useState("mission");
+  const [displayedTab, setDisplayedTab] = useState("mission"); // 👈 controla imagem
+  const [pulse, setPulse] = useState(false);
+
   const [visible, setVisible] = useState(false);
   const [isLeaving, setIsLeaving] = useState(false);
 
   const ref = useRef(null);
 
   const current = tabs[activeTab];
+  const displayed = tabs[displayedTab];
 
   const isImageUrl = (value) => {
     if (typeof value !== "string") return false;
@@ -51,6 +58,19 @@ function OurMission() {
       value.endsWith(".svg") ||
       value.endsWith(".webp")
     );
+  };
+
+  // 🔥 troca com animação
+  const handleTabChange = (tab) => {
+    if (tab === activeTab) return;
+
+    setActiveTab(tab);
+    setPulse(true);
+
+    setTimeout(() => {
+      setDisplayedTab(tab);
+      setPulse(false);
+    }, 400); // duração do "batimento"
   };
 
   // 🔥 ENTRADA
@@ -106,7 +126,7 @@ function OurMission() {
           {Object.keys(tabs).map((tab) => (
             <button
               key={tab}
-              onClick={() => setActiveTab(tab)}
+              onClick={() => handleTabChange(tab)}
               className={`px-5 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
                 activeTab === tab
                   ? "bg-[#0088F6] text-white shadow"
@@ -128,16 +148,18 @@ function OurMission() {
         
         {/* IMAGE */}
         <div
-          className={`w-[300px] h-[200px] relative transition-all duration-1000 ${
+          className={`w-[300px] h-[200px] relative transition-all duration-700 ${
             visible && !isLeaving
               ? "opacity-100 translate-x-0"
               : "opacity-0 -translate-x-10"
           }`}
         >
           <img
-            src="assets/img/mission.png"
-            alt="team"
-            className="w-full h-full object-contain drop-shadow-[0_10px_25px_rgba(0,0,0,0.4)]"
+            src={displayed.image}
+            alt="tab"
+            className={`w-full h-full object-contain drop-shadow-[0_10px_25px_rgba(0,0,0,0.4)]
+              ${pulse ? "animate-heartbeat" : ""}
+            `}
           />
         </div>
 
@@ -183,6 +205,22 @@ function OurMission() {
           </div>
         </div>
       </div>
+
+      <style>
+        {`
+          @keyframes heartbeat {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.15); }
+            40% { transform: scale(0.95); }
+            60% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+          }
+
+          .animate-heartbeat {
+            animation: heartbeat 1s ease;
+          }
+        `}
+      </style>
     </section>
   );
 }

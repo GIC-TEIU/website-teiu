@@ -1,9 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 
-function FounderSection() {
+function FounderSection({data}) {
   const [progress, setProgress] = useState(0);
   const ref = useRef(null);
-
+   const [founder , setFounder] = useState(' ');
+   
+    useEffect(()=>{
+      console.log('founder',data?.components?.foundation)
+        setFounder(data?.components?.foundation)
+      },[data])
+    
   useEffect(() => {
     const handleScroll = () => {
       if (!ref.current) return;
@@ -29,9 +35,9 @@ function FounderSection() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Inverte pra usar como visibilidade
+
   const opacity = 1 - progress;
-  const translateY = progress * 80; // move pra baixo enquanto some
+  const translateY = progress * 80; 
 
   return (
     <section
@@ -47,7 +53,7 @@ function FounderSection() {
         {/* IMAGEM */}
         <div className="w-full overflow-hidden transition-all duration-500">
           <img
-            src="/assets/img/founder.jpg"
+            src={`http://127.0.0.1:8080/storage/${founder?.assets?.hero_banner?.url}`}
             alt="Fundador"
             className="w-full h-[250px] sm:h-[350px] md:h-[450px] object-contain rounded-xl shadow-lg"
           />
@@ -55,14 +61,20 @@ function FounderSection() {
 
         {/* TEXTO */}
         <div className="flex flex-col items-center text-center">
-          <h4 className="font-bold text-lg sm:text-xl md:text-2xl mb-2">
-            Risus commodo viverra maecenas accumsan lacus vel.
-          </h4>
+      
 
-          <p className="text-sm sm:text-base md:text-lg text-gray-600 max-w-2xl">
-            Quis ipsum suspendisse ultrices gravida. Risus commodo viverra
-            maecenas accumsan lacus vel.
-          </p>
+          <div
+            className="font-bold text-lg sm:text-xl md:text-2xl mb-2"
+            dangerouslySetInnerHTML={{
+              __html: founder?.texts?.title?.content || ""
+            }}
+          />
+          <div
+            className="text-sm sm:text-base md:text-lg text-gray-600 max-w-2xl space-y-2"
+            dangerouslySetInnerHTML={{
+              __html: founder?.texts?.description?.content || ""
+            }}
+          />
         </div>
       </div>
     </section>

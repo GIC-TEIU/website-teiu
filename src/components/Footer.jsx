@@ -24,7 +24,6 @@ function Footer() {
               {t('footer.empresa', 'Empresa')}
             </h4>
             <ul className="flex flex-col gap-3 text-white/80 font-light font-teiu">
-              <li><a href="#" className="hover:text-white hover:underline transition-all">{t('menu.marcas', 'Nossas Marcas')}</a></li>
               <li><a href="/produtos" className="hover:text-white hover:underline transition-all">{t('menu.produtos', 'Nossos Produtos')}</a></li>
               <li><a href="/trabalheconosco" className="hover:text-white hover:underline transition-all">{t('menu.trabalheConosco', 'Trabalhe Conosco')}</a></li>
             </ul>

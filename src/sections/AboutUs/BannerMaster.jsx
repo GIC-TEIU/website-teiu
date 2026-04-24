@@ -24,7 +24,7 @@ function BannerMaster({ title, text }) {
   return (
     <section
       ref={bannerRef}
-      className="relative bg-[url('/assets/img/capa-aboutus.jpg')] bg-cover bg-[80%_center] md:bg-right h-[70vh] md:h-[90vh] w-full flex items-center justify-start text-white px-6 sm:px-12 md:px-[100px] lg:px-[150px]"
+      className="relative bg-[url('/assets/img/A-empresa.jpg')] bg-cover bg-[80%_center] md:bg-right h-[70vh] md:h-[90vh] w-full flex items-center justify-start text-white px-6 sm:px-12 md:px-[100px] lg:px-[150px]"
     >
       <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/20 to-transparent md:hidden" />
 

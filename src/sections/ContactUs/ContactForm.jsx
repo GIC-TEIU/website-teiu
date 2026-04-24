@@ -107,7 +107,7 @@ function ContactForm() {
         <div className="w-full lg:w-1/2 flex justify-center">
           <div className="w-full max-w-[500px] aspect-[653/687]">
             <img
-              src="/assets/img/faleconosco.png"
+              src="/assets/img/faleconosco.jpg"
               alt="Contato"
               className="w-full h-full object-cover rounded-3xl shadow-md"
             />

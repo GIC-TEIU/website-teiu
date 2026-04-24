@@ -17,7 +17,7 @@ const tabs = {
   },
   vision: {
     title: "Nossa Visão",
-    image: "/assets/img/ourValues.png",
+    image: "/assets/img/ourVision.png",
     items: [
       { icon: "👁️", text: "Ser referência no mercado com inovação e excelência." },
       { icon: "🚀", text: "Crescer continuamente e impactar positivamente." },
@@ -25,7 +25,7 @@ const tabs = {
   },
   values: {
     title: "Nossos Valores",
-    image: "/assets/img/ourVision.png",
+    image: "/assets/img/ourValues.png",
     items: [
       { icon: "🤝", text: "Ética, transparência e compromisso." },
       { icon: "💡", text: "Inovação e foco no cliente." },

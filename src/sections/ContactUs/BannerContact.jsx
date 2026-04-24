@@ -30,18 +30,23 @@ function BannerContactSession() {
         icon="/assets/img/email.svg"
         title="Por Email"
         description="teiu@teiu.com.br"
+        action="email"
+        
         />
 
         <CardContact
         icon="/assets/img/wpp.svg"
         title="No WhatsApp"
         description="(00) 00000-0000"
+        action="whatsapp"
+
         />
 
         <CardContact
         icon="/assets/img/instagram.svg"
         title="Nas Redes"
         description="@teiuoficial"
+        action="instagram"
         />
 
          

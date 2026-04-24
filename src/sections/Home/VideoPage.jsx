@@ -1,8 +1,9 @@
 import React, { useRef, useEffect, useState } from 'react';
 
-function InstitutionalVideo({ videoUrl, posterUrl }) {
+function InstitutionalVideo({ data }) {
   const videoRef = useRef(null);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [img, setImg] = useState('');
 
   useEffect(() => {
     const options = {
@@ -31,14 +32,18 @@ function InstitutionalVideo({ videoUrl, posterUrl }) {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(()=>{
+    setImg(data.components?.banner_video?.assets.banner_video_home.url)
+  },[data])
+
   return (
     <section className="w-full flex justify-center">
       <div className="w-full">
         <div className="relative aspect-video bg-gray-900 overflow-hidden">
             <video
               ref={videoRef}
-              src={isLoaded ? "/assets/video/Eternità.mp4" : ""} 
-              poster={posterUrl}
+              src={isLoaded ? `http://127.0.0.1:8080/storage/${img}` : ""} 
+             
               muted
               loop
               playsInline

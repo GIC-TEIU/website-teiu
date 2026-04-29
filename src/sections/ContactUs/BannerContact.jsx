@@ -1,6 +1,10 @@
 import CardContact from "../../components/CardContact";
 import Navbar from "../../components/Navbar";
+import { useTranslation, Trans } from 'react-i18next';
+
 function BannerContactSession() {
+  const { t } = useTranslation();
+
   return (
     <div className="w-full h-[90vh] relative">
       <Navbar />
@@ -19,8 +23,10 @@ function BannerContactSession() {
       {/* Conteúdo */}
       <div className="relative z-10 flex flex-col justify-center h-full px-6 sm:px-10 lg:px-70">
         {/* Título */}
-        <h1 className="text-white text-3xl sm:text-5xl font-semibold max-w-xl leading-tight mt-40 mb-10">
-          PRECISA FALAR <br /> COM A TEIU?
+        <h1 className="text-white text-3xl sm:text-5xl font-semibold max-w-xl leading-tight mt-40 mb-10 uppercase">
+          <Trans i18nKey="titles.contatoTeiu">
+            PRECISA FALAR <br /> COM A TEIÚ?
+          </Trans>
         </h1>
 
         {/* Cards */}

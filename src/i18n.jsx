@@ -30,6 +30,9 @@ const resources = {
         "categoria": "Categoria",
         "pesquisar": "Pesquisar",
         "apagar": "Limpar Tudo",
+        "contatoTeiu": "PRECISA FALAR <br /> COM A TEIÚ?",
+        "duvida": "ALGUMA DÚVIDA? <br /> <strong>ENTRE EM CONTATO</strong>",
+        "faleComTeiu": "FALE COM A TEIÚ"
       }
     }
   },
@@ -62,6 +65,9 @@ const resources = {
         "categoria": "Category",
         "pesquisar": "Search",
         "apagar": "Delete All",
+        "contatoTeiu": "NEED TO TALK <br /> TO TEIÚ?",
+        "duvida": "ANY QUESTIONS? <br /> <strong>GET IN TOUCH</strong>",
+        "faleComTeiu": "TALK TO TEIÚ"
       }
     }
   }

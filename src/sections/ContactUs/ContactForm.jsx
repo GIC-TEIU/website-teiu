@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
+import { useTranslation, Trans } from "react-i18next";
 
 function ContactForm() {
+  const { t } = useTranslation();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -122,8 +124,10 @@ function ContactForm() {
           </span>
 
           <h2 className="text-3xl sm:text-4xl font-semibold mt-4 leading-tight text-gray-900">
-            ALGUMA DÚVIDA? <br />
-            <span className="font-bold">ENTRE EM CONTATO</span>
+            <Trans i18nKey="titles.duvida">
+              ALGUMA DÚVIDA? <br />
+              <span className="font-bold">ENTRE EM CONTATO</span>
+            </Trans>
           </h2>
 
           <form onSubmit={handleSubmit} className="mt-8 flex flex-col gap-4">

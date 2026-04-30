@@ -11,14 +11,14 @@ const SustentabilidadePage = () => {
     <div className="bg-white flex flex-col">
       <Navbar />
       
-      {/* Hero Section */}
-      <div className="relative w-full h-[80vh] md:h-[100vh] flex flex-col items-center justify-center text-center"> 
-        <div className="absolute inset-0 z-0 overflow-hidden">
+      <div className="relative w-full h-[60vh] md:h-screen flex flex-col items-center justify-center text-center"> 
+        <div className="absolute inset-0 z-0">
           <img 
             src="/assets/img/aguasanitariaverde.jpeg" 
             alt="Natureza e Sustentabilidade" 
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover object-center" 
           />
+          <div className="absolute inset-0 bg-black/10 md:bg-transparent"></div>
         </div>
       </div>
       <ExposeItem/>

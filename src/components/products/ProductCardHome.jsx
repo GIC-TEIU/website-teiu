@@ -17,11 +17,13 @@ function ProductCardHome({ title, image, parentId, variantId }) {
         </h3>
       </div>
 
+      {/* Container da imagem */}
       <div className="relative flex-grow w-full flex items-center justify-center">
         {image ? (
           <img 
             className="h-full w-auto object-contain transition-all duration-500 ease-in-out 
-                       group-hover:scale-[1.06] 
+                       group-hover:scale-[0.8] 
+                       group-hover:-translate-y-8 
                        group-hover:drop-shadow-[0_20px_20px_rgba(0,0,0,0.15)]" 
             src={image} 
             alt={title} 
@@ -33,7 +35,10 @@ function ProductCardHome({ title, image, parentId, variantId }) {
         )}
       </div>
 
-      <div className="mt-4 text-teiu-primary font-bold text-sm uppercase tracking-wider opacity-0 group-hover:opacity-100 transition-opacity">
+      {/* O "rótulo" (Saiba mais) que aparece na base */}
+      <div className="mt-4 text-teiu-primary font-bold text-sm uppercase tracking-wider 
+                      opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 
+                      transition-all duration-500">
         Saiba mais
       </div>
     </Link>

@@ -20,7 +20,7 @@ function ProductsPage() {
     });
 
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 6;
+    const itemsPerPage = 8;
 
     const options = useMemo(() => ({
         brands: [...new Set(productsMock.map(p => p.brand))],

@@ -1,6 +1,7 @@
 import CardContact from "../../components/CardContact";
 import Navbar from "../../components/Navbar";
 import { useTranslation, Trans } from 'react-i18next';
+import { Headset } from 'lucide-react';
 
 function BannerContactSession() {
   const { t } = useTranslation();
@@ -55,8 +56,14 @@ function BannerContactSession() {
         action="instagram"
         />
 
-         
+       <CardContact
+        icon={Headset} 
+        title="Televendas"
+        description="0800 000 000"
+        action="tel" 
+      />
 
+         
         </div>
       </div>
     </div>

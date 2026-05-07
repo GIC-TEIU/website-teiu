@@ -42,7 +42,6 @@ function AboutUs() {
         <div className="bg-gradient-to-br from-[#02D1FF] to-[#074B9A] pt-20 rounded-t-4xl">
            <SocialProof data={pageData?.components?.social_proof}/>
            <OurMission data={pageData?.components?.our_missions}/>
-
            <Footer/>
         </div>
     </>

@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react'
 
 function Hero({data}) {
   const [img , setImg] = useState(' ');
+  useEffect(()=>{
+      console.log('cacac', img)
+  },[img])
  
   useEffect(()=>{
       setImg(data?.components?.banner?.assets?.banner_home?.url)

@@ -25,7 +25,7 @@ function Home() {
     fetchPage();
   }, []);
   useEffect(()=> {
-    console.log('aaaaaaaaaaaaaaaaaa',pageData?.components?.banner?.assets?.banner_home?.url)
+    console.log('page',pageData)
   },[pageData])
 
   return (

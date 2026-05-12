@@ -111,7 +111,7 @@ function AdventureAthletes() {
 
               {/* Faixa Inferior (Esporte) */}
               <div className="bg-[#009FE3] py-2 px-4 flex justify-end rounded-b-sm">
-                <span className="text-white font-bold text-xs tracking-wider">
+                <span className="text-white font-bold text-xs tracking-wider uppercase ">
                   {atleta.esporte}
                 </span>
               </div>

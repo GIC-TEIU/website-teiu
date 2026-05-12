@@ -49,7 +49,7 @@ function Navbar() {
         {/* Logo */}
         <div className="flex justify-start">
           <img 
-            src="/assets/img/Logomarca.png" 
+            src="/assets/img/Logomarca-Azul.png" 
             alt="Logo Teiú" 
             className="h-12 w-auto cursor-pointer"
             onClick={() => handleNavigate('/')}

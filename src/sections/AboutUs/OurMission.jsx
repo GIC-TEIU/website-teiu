@@ -19,16 +19,16 @@ const tabs = {
     title: "Nossa Visão",
     image: "/assets/img/ourVision.png",
     items: [
-      { icon: "👁️", text: "Ser referência no mercado com inovação e excelência." },
-      { icon: "🚀", text: "Crescer continuamente e impactar positivamente." },
+      { icon: "/assets/img/Binoculars-Sharp--Streamline-Ionic-Sharp.svg", text: "Ser referência no mercado com inovação e excelência." },
+      { icon: "/assets/img/rocket_launch_50dp_FFFFFF.svg", text: "Crescer continuamente e impactar positivamente." },
     ],
   },
   values: {
     title: "Nossos Valores",
     image: "/assets/img/ourValues.png",
     items: [
-      { icon: "🤝", text: "Ética, transparência e compromisso." },
-      { icon: "💡", text: "Inovação e foco no cliente." },
+      { icon: "/assets/img/handshake_50dp_FFFFFF.svg", text: "Ética, transparência e compromisso." },
+      { icon: "/assets/img/tips_and_updates_50dp_FFFFFF.svg", text: "Inovação e foco no cliente." },
     ],
   },
 };
